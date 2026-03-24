@@ -21,7 +21,8 @@
     },
     {
       "branch": "pre-release",
-      "prerelease": true
+      "prerelease": true,
+      "prerelease-type": "beta"
     }
   ]
 }
