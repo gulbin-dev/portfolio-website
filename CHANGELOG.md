@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.9-beta.0](https://github.com/gulbin-dev/portfolio-website/compare/v1.7.8-beta.0...v1.7.9-beta.0) (2026-03-24)
+
+
+### Bug Fixes
+
+* update configs ([b4fc748](https://github.com/gulbin-dev/portfolio-website/commit/b4fc74814a5605db25f3ad3d6d926a02690ee9da))
+
 ## [1.7.8-beta.0](https://github.com/gulbin-dev/portfolio-website/compare/v1.7.7-beta.0...v1.7.8-beta.0) (2026-03-24)
 
 
