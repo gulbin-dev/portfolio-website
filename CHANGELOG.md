@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0-beta-1](https://github.com/gulbin-dev/portfolio-website/compare/v1.1.1...v1.7.0-beta-1) (2026-03-24)
+
+
+### Features
+
+* test auto PR (minor) ([f168956](https://github.com/gulbin-dev/portfolio-website/commit/f1689561e7b410f1397bc5365edcdb186aa4a641))
+* test auto PR (minor) ([ffd8553](https://github.com/gulbin-dev/portfolio-website/commit/ffd8553e4ced4a83cc1c1a6796aa02c0c4ccbbb6))
+* test auto PR (minor) ([1cf2c81](https://github.com/gulbin-dev/portfolio-website/commit/1cf2c81099a3dcdc1bd38ba51193a4f8c09e469e))
+
 ## [1.2.0](https://github.com/gulbin-dev/portfolio-website/compare/v1.1.0...v1.2.0) (2026-03-24)
 
 
