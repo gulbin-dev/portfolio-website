@@ -23,7 +23,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.PORTFOLIO_TOKEN }}
-          # prerelease is true only when pushing to the pre-release branch
+          target-branch: ${{ github.ref_name }}
           release-type: node
 
   deploy:
