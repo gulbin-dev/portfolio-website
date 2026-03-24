@@ -1,0 +1,58 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - master
+      - pre-release
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  statuses: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.PORTFOLIO_TOKEN }}
+          # prerelease is true only when pushing to the pre-release branch
+          release-type: node
+
+  deploy:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment
+        # Use --environment=preview for beta, --environment=production for main
+        run: |
+          if [ "${{ github.ref_name }}" = "master" ]; then
+            vercel pull --yes --environment=production --token=${{ secrets.PORTFOLIO_VERCEL_TOKEN }}
+          else
+            vercel pull --yes --environment=preview --token=${{ secrets.PORTFOLIO_VERCEL_TOKEN }}
+          fi
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build & Deploy
+        # Add --prod flag ONLY for the master branch
+        run: |
+          vercel build ${{ github.ref_name == 'master' && '--prod' || '' }} --token=${{ secrets.PORTFOLIO_VERCEL_TOKEN }}
+          vercel deploy --prebuilt ${{ github.ref_name == 'master' && '--prod' || '' }} --token=${{ secrets.PORTFOLIO_VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
