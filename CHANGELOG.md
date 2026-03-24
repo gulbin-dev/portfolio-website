@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.5](https://github.com/gulbin-dev/portfolio-website/compare/v1.7.4...v1.7.5) (2026-03-24)
+
+
+### Bug Fixes
+
+* test auto PR (patch) ([91c9395](https://github.com/gulbin-dev/portfolio-website/commit/91c9395cfc3e7ea805a48992cb184121b645e0c4))
+* test auto PR (patch) ([5c965ec](https://github.com/gulbin-dev/portfolio-website/commit/5c965ec6644a53205eb9d210c8cfd7a04a12d92f))
+
 ## [1.7.4](https://github.com/gulbin-dev/portfolio-website/compare/v1.7.3...v1.7.4) (2026-03-24)
 
 
