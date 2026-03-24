@@ -6,12 +6,14 @@
 ### Features
 
 * added vercel.json file ([d948bd9](https://github.com/gulbin-dev/portfolio-website/commit/d948bd939f895584a57824e787b2c8040187e4d1))
+## [1.1.1](https://github.com/gulbin-dev/portfolio-website/compare/v1.1.0...v1.1.1) (2026-03-24)
 
 
 ### Bug Fixes
 
 * intended target the current branch ([057c44d](https://github.com/gulbin-dev/portfolio-website/commit/057c44d229c2d8f585f13b38d99a61f2332d6356))
 * release-please-config.json branch value change to master ([b3d3b4d](https://github.com/gulbin-dev/portfolio-website/commit/b3d3b4d1aa6053aa1e78de9950f32a4470f26422))
+* test auto PR (bump) ([d6670eb](https://github.com/gulbin-dev/portfolio-website/commit/d6670eb229fcb5b82538f736e7d52e4ab47af366))
 
 ## [1.1.0](https://github.com/gulbin-dev/portfolio-website/compare/v1.0.0...v1.1.0) (2026-03-24)
 
