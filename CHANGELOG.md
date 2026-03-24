@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-beta.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.1.0-beta.0...v1.2.0-beta.0) (2026-03-24)
+
+
+### Features
+
+* added asset files ([7625c07](https://github.com/gulbin-dev/portfolio-website-2/commit/7625c07b2313aa779324bdf9d76fdc84f5c2f167))
+
 ## [1.1.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.0.2...v1.1.0) (2026-03-24)
 
 
