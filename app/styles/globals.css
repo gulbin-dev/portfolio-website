@@ -1,26 +1,97 @@
 @import "tailwindcss";
+@import "./styles.css";
+/****************************
+*
+* Base classes 
+*
+*****************************/
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  *:not(dialog) {
+    margin: 0;
+  }
+  html {
+    font-family: var(--font-body);
+    color: var(--color-light-foreground);
+    font-kerning: none;
+    text-rendering: optimizeSpeed;
+  }
+  h1 {
+    line-height: 50px;
+  }
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+    font-family: var(--font-important) !important;
+  }
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --font-important: var(--font-lato);
+  --font-body: var(--font-open-sans);
+}
+
+@theme {
+  --spacing: 8px;
+  --color-light-foreground: #ededed;
+  --color-dark-foreground: #1a1a1a;
+  --color-primary-color: #7a00ff;
+  --color-primary-color-darker: #3f0084;
+  --color-secondary-color: #0079f6;
+  --color-action-color: #ffc400;
+  --color-col-neutral-1: #ac62ff;
+  --color-col-neutral-2: #8b008b;
+  --text-heading-xl: clamp(1.8em, 3vw, 3.6em);
+  --text-heading-lg: clamp(1.4em, 3vw, 3.2em);
+  --text-heading-md: clamp(0.8em, 3vw, 2.8em);
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
 }
