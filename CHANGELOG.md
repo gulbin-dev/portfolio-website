@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0-beta.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.2.0-beta.0...v1.3.0-beta.0) (2026-03-25)
+
+
+### Features
+
+* added styles.css ([31cb2b9](https://github.com/gulbin-dev/portfolio-website-2/commit/31cb2b9b907ead115cee10a2abafab9ab614adee))
+
 ## [1.2.0-beta.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.1.0-beta.0...v1.2.0-beta.0) (2026-03-25)
 
 
