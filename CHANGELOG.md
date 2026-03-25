@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0-beta.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.3.0-beta.0...v1.4.0-beta.0) (2026-03-25)
+
+
+### Features
+
+* added gsap animation ([7d69cd3](https://github.com/gulbin-dev/portfolio-website-2/commit/7d69cd3350a029cd7e718fc199c7f84acbebe9e7))
+
 ## [1.3.0-beta.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.2.0-beta.0...v1.3.0-beta.0) (2026-03-25)
 
 
