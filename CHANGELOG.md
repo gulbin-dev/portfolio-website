@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.2](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.1.0...v1.6.2) (2026-03-25)
+
+
+### Bug Fixes
+
+* patch to release ([2e9ea50](https://github.com/gulbin-dev/portfolio-website-2/commit/2e9ea50261b20e34cffd095d203d8c5d8cb93990))
+* release config ([6c3e852](https://github.com/gulbin-dev/portfolio-website-2/commit/6c3e8527d5790609c4e6f8d893b44c14bb91d3a7))
+
 ## [1.6.1-beta.1](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.6.0-beta.1...v1.6.1-beta.1) (2026-03-25)
 
 
