@@ -1,4 +1,4 @@
-import { gsap, SplitText } from "@/utils/gsap/gsap";
+import { gsap, SplitText } from "@utils/gsap/gsap";
 
 export default function heroSectionGSAP(context: gsap.Context) {
   context.add(() => {
