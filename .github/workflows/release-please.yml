@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   release-stable:
+    if: github.base_ref == 'master'
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
@@ -22,12 +23,12 @@ jobs:
         id: release
         with:
           token: ${{ secrets.PORTFOLIO_TOKEN }}
-          target-branch: master
           release-type: node
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
   release-beta:
+    if: github.base_ref == 'pre-release'
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
@@ -36,7 +37,6 @@ jobs:
         id: release
         with:
           token: ${{ secrets.PORTFOLIO_TOKEN }}
-          target-branch: pre-release
           release-type: node
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
