@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     "joshua glenn gulbin",
     "portfolio",
   ],
+  verification: {
+    google: "He5I8EQ2ZdNOVjUzs4yY2uBTt8VEpxebRCppfEiZJS8",
+  },
 };
 
 const poppins = Poppins({
