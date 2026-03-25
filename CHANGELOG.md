@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.7.0-beta.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.6.0-beta.0...v1.7.0-beta.0) (2026-03-25)
+## [1.6.0-beta.1](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.6.0-beta.0...v1.6.0-beta.1) (2026-03-25)
 
 
 ### Features
