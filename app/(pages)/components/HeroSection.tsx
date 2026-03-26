@@ -86,14 +86,6 @@ export default function HeroSection() {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 252.44 268.13"
           >
-            <defs>
-              <clipPath id="my-profile-clip">
-                <path
-                  id="m-clip-path"
-                  d="M185.2,211v30.27h24.23v26.81h-106.09v-36.9h-30.73v9.33h-35.08v-32.56H15.98v-35.09h9.09v-6.19h3.98v-33.63H7.95v-15.9h12.55v-17.12H0v-17.73h20.5v-29.04H2.68v-24.16h53.88v-13.76h17.12V.08h101.81v25.96h22.32v21.4h36l.21,18.63h-15.42v22.95h-8.26v19.56h18.65v27.21h-18.65v21.71h30.27v32.1h11.83v21.4h-67.24Z"
-                />
-              </clipPath>
-            </defs>
             <path
               id="m-profile-1"
               className="will-change-transform"
@@ -117,8 +109,7 @@ export default function HeroSection() {
           >
             <Image
               data-speed="0.5"
-              className="profile-img relative tablet:absolute tablet:bottom-5 desktop:left-10 tablet:will-change-transform"
-              aria-label=""
+              className="profile-img relative tablet:absolute tablet:bottom-5 desktop:left-10"
               src={heroProfile}
               alt="Joshua Glenn R. Gulbin | Frontend React Web Developer"
               width={300}
