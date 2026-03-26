@@ -19,7 +19,7 @@ export default function heroSectionGSAP(context: gsap.Context) {
         keyframes: keyframes,
         scrollTrigger: {
           trigger: ".list-discover-button",
-          start: "top 85%",
+          start: "top 95%",
         },
       });
 
@@ -28,7 +28,7 @@ export default function heroSectionGSAP(context: gsap.Context) {
         keyframes: keyframes,
         scrollTrigger: {
           trigger: ".list-about-me-button",
-          start: "top 85%",
+          start: "top 95%",
         },
       });
       return () => {
