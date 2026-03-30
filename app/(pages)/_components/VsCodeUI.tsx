@@ -13,7 +13,7 @@ export default function VsCodeUI() {
 
       {/* dark background <div> simialr to vs code */}
       <div className=" bg-[#0F111A] w-full">
-        <div className="max-w-80 place-self-center px-3 flex flex-col py-4 text-heading-md w-full">
+        <div className="max-w-96 place-self-center px-3 flex flex-col py-4 text-heading-md w-full ">
           <p id="issue" className="text-[#FC4646]">
             <span id="issue-span" className="text-[#65E913] font-bold">
               Issue:{" "}
@@ -26,7 +26,6 @@ export default function VsCodeUI() {
           <div className="flex pt-4">
             <div className="code-snippet flex flex-col pr-1">
               <p className="code-darkgray">{"//sample user data"}</p>
-
               <p>
                 <span className="code-reserved-name">const </span>
                 <span className="code-userdefined">user </span>
@@ -103,6 +102,8 @@ export default function VsCodeUI() {
                 <span className="code-reserved-syntax">/</span>
                 <span className="code-number">g</span>
                 <span className="code-reserved-syntax">, </span>
+              </p>
+              <p>
                 <span className="code-inner-casing"> {"("}</span>
                 <span className="code-userdefined italic">char</span>
                 <span className="code-inner-casing"> {") "}</span>
