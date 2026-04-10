@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.9.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.8.0...v1.9.0) (2026-04-10)
+
+
+### Features
+
+* added animation on about page ([d842989](https://github.com/gulbin-dev/portfolio-website-2/commit/d842989d726bc7ebd984dfd6e6f37254aeba0e3e))
+* added animation on card-skill ([df13808](https://github.com/gulbin-dev/portfolio-website-2/commit/df138087a469340c5ca4d9546cf6f083951ec025))
+* added animation on header ([8cbde01](https://github.com/gulbin-dev/portfolio-website-2/commit/8cbde0139e579b1ce5cb570d74ed0994d280577f))
+* added animation on hero-section ([28e76e5](https://github.com/gulbin-dev/portfolio-website-2/commit/28e76e5677015b8196f5157f151f283cfcf89b5a))
+* added animation on HireMe component ([679c57e](https://github.com/gulbin-dev/portfolio-website-2/commit/679c57ecb63018a06522859a62c09f6409cc39bd))
+* added logo ([471def8](https://github.com/gulbin-dev/portfolio-website-2/commit/471def8dcf951fe6ab3e434c6f15e96ced8f9fb5))
+* added photos for image sequencing on hero-section ([76de251](https://github.com/gulbin-dev/portfolio-website-2/commit/76de25157bc49ca9f38fb37e7c74727504edf3d4))
+* added responsive styles on anchors ([9980e15](https://github.com/gulbin-dev/portfolio-website-2/commit/9980e15d8fbc33e217822665c1ecfe5e514521f7))
+* added responsive video ([884216d](https://github.com/gulbin-dev/portfolio-website-2/commit/884216dc689e82835d99c6683bfc368a4bbd4fc8))
+* added window resize listener ([35e503f](https://github.com/gulbin-dev/portfolio-website-2/commit/35e503fc36b38e72e63f64922e1edf9c584f762d))
+
+
+### Bug Fixes
+
+* file import ([a11b43f](https://github.com/gulbin-dev/portfolio-website-2/commit/a11b43fed285236dc337facd46c3adf43be8fef7))
+* useHomePageGSAP hook will now run on Home page mount ([9514245](https://github.com/gulbin-dev/portfolio-website-2/commit/951424539d0e798a3dde8a299b0a6106e7856b8d))
+
 ## [1.8.0](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.7.0...v1.8.0) (2026-03-26)
 
 
