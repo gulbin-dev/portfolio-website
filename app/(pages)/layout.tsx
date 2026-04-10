@@ -57,7 +57,7 @@ const roboto = Roboto({
   display: "swap",
 });
 
-export default async function PageLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
