@@ -5,6 +5,7 @@ import HireMe from "./_components/HireMe";
 import HeroSection from "./_components/HeroSection";
 import useGlobalGSAP from "@/app/hooks/useHomePageGSAP";
 
+/** Home page content */
 export default function Home() {
   useGlobalGSAP();
   return (

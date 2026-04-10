@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 import NavLinks from "./NavLinks";
 import Link from "next/link";
 import Image from "next/image";
+<<<<<<< HEAD
+=======
+import useHeaderTransition from "@hooks/useHeaderTransition";
+>>>>>>> development
 
 export default function Header() {
+  useHeaderTransition();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   useEffect(() => {
     if (isMobileNavOpen) {
@@ -34,6 +39,10 @@ export default function Header() {
           <button
             onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
             className="flex flex-col gap-1 tablet:hidden"
+<<<<<<< HEAD
+=======
+            aria-label="Navigation menu"
+>>>>>>> development
           >
             <span className="hamburger-icon"></span>
             <span className="hamburger-icon"></span>
@@ -42,7 +51,7 @@ export default function Header() {
         </div>
       </header>
       {isMobileNavOpen && (
-        <div className="bg-primary-color-darker w-full h-screen relative top-0 left-0 z-10 py-15">
+        <div className="bg-primary-color-darker w-full h-screen sticky top-0 left-0 z-10 py-15">
           <NavLinks
             navStyle="flex flex-col gap-2 items-end pr-3"
             anchorStyle="text-heading-lg"

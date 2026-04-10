@@ -1,13 +1,24 @@
 "use client";
-import UI_Task from "@components/UI_Task";
 
+import UI_Task from "@components/UI_Task";
+import useCodeBlocks from "@hooks/home-page-gsap/vs-code-gsap/useCodeBlocks";
+import useCircles from "@hooks/home-page-gsap/vs-code-gsap/useCircles";
+import useTasks from "@hooks/home-page-gsap/vs-code-gsap/useTasks";
+import useVSHeader from "@/app/hooks/home-page-gsap/vs-code-gsap/useVSHeader";
 export default function VsCodeUI() {
+  useCodeBlocks();
+  useCircles();
+  useTasks();
+  useVSHeader();
   return (
     <section
       aria-hidden="true"
       className="section snap w-full h-full  section3-bg"
     >
-      <h2 className="vs-code-header pt-8 pb-3 text-heading-xl text-center">
+      <h2
+        id="vs-code-header"
+        className="vs-code-header pt-8 pb-3 text-heading-xl text-center"
+      >
         Solving Problem Into Smaller Tasks
       </h2>
 

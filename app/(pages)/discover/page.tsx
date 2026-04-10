@@ -1,6 +1,8 @@
 "use client";
 
 import { LuFilter } from "react-icons/lu";
+
+/** Discover page content */
 export default function Discover() {
   return (
     <div id="smooth-content">
