@@ -14,7 +14,7 @@ export default function HireMe({ windowSize }: { windowSize: number }) {
       <div className="max-w-180 place-self-center">
         <ul className="flex flex-col gap-8 mt-6 tablet:flex-row">
           <li className="card-container">
-            <FaMapLocationDot className="location icons" aria-hidden />
+            <FaMapLocationDot className="icons" aria-hidden />
             <div className="content-container">
               <h3 className="fade-entry text-heading-lg">Location</h3>
               <h4 className="fade-entry">Remote/Worldwide</h4>
@@ -24,7 +24,7 @@ export default function HireMe({ windowSize }: { windowSize: number }) {
             </div>
           </li>
           <li className="card-container">
-            <RiTeamFill className="job-preference icons" aria-hidden />
+            <RiTeamFill className="icons" aria-hidden />
             <div className="content-container">
               <h3 className="fade-entry text-heading-lg">Job Preference</h3>
               <h4 className="fade-entry">Flexible</h4>
