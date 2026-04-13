@@ -23,7 +23,7 @@ export default function About() {
   }, [windowSize]);
 
   return (
-    <main className="bg-primary-color-darker px-3">
+    <main className="bg-primary-color-darker px-3 mb-4">
       <section id="about-top" className="flex flex-col">
         <div className="canvas-container tablet:absolute h-75 w-full top-0 left-0  z-400 tablet:w-55 tablet:h-screen overflow-hidden ">
           <div className="hidden tablet:block absolute bg-primary-color-darker w-23 h-full"></div>
@@ -37,7 +37,7 @@ export default function About() {
           <div className="relative tablet:top-15 tablet:flex">
             {" "}
             <div className="hidden tablet:block min-w-40 min-h-15"></div>{" "}
-            <div className="flex flex-col tablet:grid tablet:auto-rows-auto tablet:max-h-20 tablet:auto-cols-min tablet:w-screen tablet:min-w-50 tablet:gap-y-5">
+            <div className="flex flex-col tablet:grid tablet:auto-rows-auto items-center tablet:max-h-20 tablet:auto-cols-min tablet:w-screen tablet:min-w-50 tablet:gap-y-5">
               {" "}
               <h1 className="text-heading-lg tablet:text-heading-xl col-start-1">
                 About Me
@@ -46,7 +46,7 @@ export default function About() {
                 className="inline-block place-self-center tablet:text-3xl tablet:truncate col-start-1"
                 aria-hidden="true"
               >
-                <span className="flex gap-1">
+                <span className="flex gap-1 justify-center">
                   {" "}
                   <span className="word-hi self-end">Hi!</span>{" "}
                   <span className="min-w-3">
@@ -167,9 +167,11 @@ export default function About() {
             JavaScript/TypeScript.
           </p>
         </div>
-        <div className="relative flex flex-col justify-center gap-x-2 text-4xl mt-2 tablet:mt-40">
-          <h2>Reach me out!</h2>
-          <ul>
+        <div className="relative flex flex-col items-center gap-x-2 mt-6 tablet:mt-40">
+          <h2 className="text-heading-lg! tablet:text-heading-xl!">
+            Reach out!
+          </h2>
+          <ul className="text-4xl flex gap-3 mt-2">
             <li>
               <button>
                 <FaGithubSquare />
@@ -183,8 +185,8 @@ export default function About() {
           </ul>
         </div>
         <div className="mt-5">
-          <h2 className="text-heading-lg">Tech Stack</h2>
-          <ul className="flex flex-wrap gap-y-4 gap-x-2 mt-3">
+          <h2 className="text-heading-lg text-center">Tech Stack</h2>
+          <ul className="flex flex-wrap gap-y-4 gap-x-2 mt-3 justify-center">
             <li>
               <span className="tech-stack">HTML</span>
             </li>
