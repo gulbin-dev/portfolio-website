@@ -28,8 +28,8 @@ export default function CardSkill({ windowSize }: { windowSize: number }) {
           codebase.
         </p>
       </div>
-      <div className="container-cards mt-0 tablet:mt-10! max-w-180 place-self-center">
-        <ul className=" flex flex-col px-3 items-center">
+      <div className="container-cards mt-0 tablet:mt-10! max-w-180 h-full tablet:max-h-100 desktop:max-h-120 place-self-center">
+        <ul className="cards-list flex flex-col px-3 gap-1  items-center">
           <li className="list-card-skill">
             <div className="card-skill">
               <div className="card-description">
@@ -61,7 +61,7 @@ export default function CardSkill({ windowSize }: { windowSize: number }) {
                 alt=""
                 width={800}
                 height={500}
-                className="tablet:max-w-80 desktop:max-w-100"
+                className="tablet:max-w-80 desktop:max-w-100 aspect-video"
               />
               <div className="container-video"></div>
             </div>
