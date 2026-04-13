@@ -6,6 +6,8 @@ import Video from "./_cardskill-components/Video";
 export default function CardSkill() {
   const scopeRef = useRef<HTMLElement>(null);
   useCardSkillGSAP(scopeRef);
+
+  console.log("run  card-skill after resize");
   return (
     <section
       id="pin-section"
@@ -28,7 +30,7 @@ export default function CardSkill() {
           codebase.
         </p>
       </div>
-      <div className="container-cards mt-0 tablet:mt-10! max-w-180 h-full tablet:max-h-100 desktop:max-h-120 place-self-center">
+      <div className="container-cards mt-0 tablet:mt-10! max-w-180 h-full  place-self-center">
         <ul className="cards-list flex flex-col px-3 gap-1  items-center">
           <li className="list-card-skill">
             <div className="card-skill">
