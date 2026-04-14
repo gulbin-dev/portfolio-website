@@ -9,7 +9,6 @@ export default function useCardSkillGSAP(
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-
       mm.add(
         // media queries conditions giving a responsive animation
         // based on screen size and reduce motion

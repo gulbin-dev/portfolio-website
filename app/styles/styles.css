@@ -160,11 +160,7 @@
     color: #c790e8;
   }
   .ui-circle {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--color-col-neutral-1);
+    @apply bg-col-neutral-1 rounded-[50%] block w-1 h-1 tablet:w-1.5 tablet:h-1.5 desktop:w-2 desktop:h-2;
   }
 
   .clip {
@@ -212,9 +208,9 @@
     text-wrap: balance;
   }
   .tech-stack {
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 4px;
-    background-color: rgb(123, 80, 129);
+    background-color: rgb(190, 100, 202);
     filter: blur(50%);
   }
 }

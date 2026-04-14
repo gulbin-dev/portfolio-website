@@ -1,19 +1,16 @@
 import { gsap, mediaQueries, useGSAP } from "@utils/gsap/gsap";
-import useWindowSizeListener from "../useWindowSizeListener";
 
 /** Custom hook to handle GSAP animations in the About page */
 export default function useAboutImage() {
-  const resizeKey = useWindowSizeListener();
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
 
-      mm.add(
-        // media queries conditions giving a responsive animation
-        // based on screen size and reduce motion
-        mediaQueries,
-        (context) => {
-          const { isSmallScreen } = context.conditions ?? {};
+    mm.add(
+      // media queries conditions giving a responsive animation
+      // based on screen size and reduce motion
+      mediaQueries,
+      (context) => {
+        const { isSmallScreen } = context.conditions ?? {};
 
           const scrollableHeroImage = () => {
             const frameCount = 47;

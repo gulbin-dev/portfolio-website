@@ -10,6 +10,7 @@ import useWindowSizeListener from "../hooks/useWindowSizeListener";
  * of the wrapped component will be rendered inside the "smooth-content"
  * div.
  */
+
 export default function PagesWrapper({
   children,
 }: {
