@@ -55,17 +55,46 @@ export default function useHeroSectionGSAP() {
         /** handle animation of SplitText */
         const animateSplitText = () => {
           document.fonts.ready.then(() => {
-            SplitText.create(".split-words", {
+            // 1. Split the text
+            const split_h1 = SplitText.create(".split-words", {
               type: "words",
               autoSplit: true,
             });
 
-            gsap.timeline({
+            // 2. Initialize Timeline
+            const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".split-words",
                 start: "top 85%",
               },
             });
+
+            // 3. Add Text Animation to Timeline
+            if (isReduceMotion) {
+              timeline.from(".split-words", {
+                y: 100,
+                autoAlpha: 0,
+                duration: 1,
+              });
+            } else {
+              timeline
+                .from(split_h1.words, {
+                  y: 100,
+                  autoAlpha: 0,
+                  stagger: {
+                    amount: 1,
+                    from: "random",
+                    ease: "power4.in",
+                  },
+                })
+                .from("#line", {
+                  drawSVG: "100% 100%",
+                  autoAlpha: 0,
+                  duration: 1,
+                  ease: "expo.out",
+                  onComplete: () => split_h1.revert(),
+                });
+            }
           });
         };
 
