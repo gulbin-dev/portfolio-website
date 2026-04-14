@@ -103,7 +103,7 @@ export default function useHeroSectionGSAP() {
           const frameCount = 47;
           const imageURLS = new Array(frameCount)
             .fill(0)
-            .map((o, i) => `/home-page/home-page_${i + 1}.png`);
+            .map((o, i) => `/frame-image/frame-image-${i + 1}.png`);
           const canvas = document.getElementById("hero-canvas");
           canvas?.setAttribute("width", "600px");
           canvas?.setAttribute("height", "1200px");
