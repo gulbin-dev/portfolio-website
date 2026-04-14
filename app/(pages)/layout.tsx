@@ -21,12 +21,20 @@ export const metadata: Metadata = {
   referrer: "strict-origin-when-cross-origin",
   // Open Graph metadata
   openGraph: {
-    type: "website",
     title: "GulbinDev | Frontend React Web Developer Portfolio",
     description:
       "A web developer portfolio of Joshua Glenn R. Gulbin. A frontend react web developer focusing on building a maintainable, user-friendly, seo-friendly website.",
-    url: "https://www.gulbindev.com",
+    url: "https://portfolio-gulbindev.vercel.app/",
     siteName: "GulbinDev Portfolio",
+    type: "website",
+    images: [
+      {
+        url: "https://portfolio-gulbindev.vercel.app/og/website.png",
+        width: 800,
+        height: 600,
+        alt: "GulbinDev Portfolio",
+      },
+    ],
   },
 
   keywords: [
