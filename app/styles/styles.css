@@ -34,7 +34,7 @@
     margin: 0 auto !important;
   }
   .list-card-skill {
-    @apply tablet:w-90 desktop:w-130 pt-5 tablet:pt-9;
+    @apply pt-5 tablet:pt-9;
   }
   .card-skill {
     @apply: flex flex-col items-center;
