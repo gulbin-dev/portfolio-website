@@ -4,6 +4,7 @@ import {
   useGSAP,
   ScrollTrigger,
   ScrollSmoother,
+  SplitText,
 } from "@utils/gsap/gsap";
 /** Custom hook to handle animation of about description*/
 export default function useDescription() {
@@ -51,13 +52,22 @@ export default function useDescription() {
             rotate: 90,
             scaleX: 10,
           });
+          gsap.set(".react-icon", {
+            x: -150,
+          });
+          gsap.set(".react", {
+            x: -100,
+          });
+          gsap.set(".and", {
+            yPercent: -102,
+          });
         }
       };
 
       const scrollHorizontal =
         !isSmallScreen &&
         gsap.to(".tablet-pinned", {
-          xPercent: -15 * (storyTellingElements.length - 1),
+          xPercent: -20 * (storyTellingElements.length - 1),
           ease: "none",
           scrollTrigger: {
             trigger: ".tablet-pinned",
@@ -84,7 +94,7 @@ export default function useDescription() {
             "bottom+=" +
             ((document.querySelector(".tablet-pinned") as HTMLDivElement)
               ?.offsetWidth +
-              1343) +
+              1180) +
             "top",
         });
         console.log("log");
@@ -113,36 +123,6 @@ export default function useDescription() {
             tweenLength: false,
           },
         });
-        // .to(".name2", {
-        //   scrambleText: {
-        //     text: "Glenn",
-        //     chars: "▘●▞",
-        //     oldClass: "unicode",
-        //     newClass: "post-scramble",
-        //     speed: 0.2,
-        //     tweenLength: false,
-        //   },
-        // })
-        // .to(".name3", {
-        //   scrambleText: {
-        //     text: "R.",
-        //     chars: "▘●▞",
-        //     oldClass: "unicode",
-        //     newClass: "post-scramble",
-        //     speed: 0.2,
-        //     tweenLength: false,
-        //   },
-        // })
-        // .to(".name4", {
-        //   scrambleText: {
-        //     text: "Gulbin",
-        //     chars: "▘●▞",
-        //     oldClass: "unicode",
-        //     newClass: "post-scramble",
-        //     speed: 0.2,
-        //     tweenLength: false,
-        //   },
-        // });
       };
 
       /**
@@ -195,6 +175,18 @@ export default function useDescription() {
       };
 
       const animateStory = () => {
+        gsap.from(".responsive", {
+          y: 100,
+          scrollTrigger: {
+            trigger: ".responsive",
+            start: `left ${
+              isMediumScreen ? "70%" : isLargeScreen ? "center" : ""
+            }`,
+            end: "right 40%",
+            containerAnimation: scrollHorizontal || undefined,
+          },
+        });
+
         const animateFrontendDeveloperBuilding = () => {
           const timeline = gsap.timeline({
             scrollTrigger: {
@@ -211,9 +203,13 @@ export default function useDescription() {
               x: 0,
               duration: 0.5,
             })
-            .to(".frontend", {
-              xPercent: 0,
-            })
+            .to(
+              ".frontend",
+              {
+                xPercent: 0,
+              },
+              "-=0.3",
+            )
             .to(".developer", {
               rotate: 0,
               y: 0,
@@ -247,10 +243,10 @@ export default function useDescription() {
             scrollTrigger: {
               trigger: ".state",
               containerAnimation: scrollHorizontal || undefined,
-              start: `right ${
-                isMediumScreen ? "80%" : isLargeScreen ? "center" : "center"
+              start: `left ${
+                isMediumScreen ? "60%" : isLargeScreen ? "center" : ""
               }`,
-              end: "right 60%",
+              end: "right 40%",
             },
           });
 
@@ -258,9 +254,13 @@ export default function useDescription() {
             .from(".state", {
               x: -100,
             })
-            .from(".driven", {
-              x: -230,
-            })
+            .from(
+              ".driven",
+              {
+                x: -230,
+              },
+              "-=0.3",
+            )
             .to(".container-state-driven", {
               "--animate-background": "#ffc400",
             })
@@ -273,12 +273,82 @@ export default function useDescription() {
               "<",
             );
         };
+        const animateReact = () => {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: ".react-icon",
+              start: `left ${
+                isMediumScreen ? "80%" : isLargeScreen ? "center" : ""
+              }`,
+              end: "right 40%",
+              containerAnimation: scrollHorizontal || undefined,
+            },
+          });
+          timeline
+            .to(".react-icon", {
+              x: 0,
+            })
+            .to(
+              ".react",
+              {
+                x: 0,
+              },
+              "<",
+            )
+            .to(".and", {
+              yPercent: 0,
+            });
+        };
+
+        document.fonts.ready.then(() => {
+          SplitText.create(".split-text-story", {
+            type: "words",
+            autoSplit: true,
+            onSplit(self) {
+              return gsap.from(self.words, {
+                y: -100,
+                stagger: {
+                  amount: 0.8,
+                  from: "start",
+                },
+                scrollTrigger: {
+                  trigger: ".split-text-story",
+                  containerAnimation: scrollHorizontal || undefined,
+                  start: `left ${
+                    isMediumScreen ? "70%" : isLargeScreen ? "center" : ""
+                  }`,
+                  end: "right center",
+                },
+                onComplete: animateReact,
+              });
+            },
+          });
+        });
         animateFrontendDeveloperBuilding();
         animateStateDriven();
+      };
+
+      const animateTechStack = () => {
+        const techStacks = gsap.utils.toArray<HTMLElement[]>(".tech-stack");
+
+        gsap.from(techStacks, {
+          y: 100,
+          opacity: 0,
+          stagger: {
+            amount: 1,
+            from: "start",
+          },
+          scrollTrigger: {
+            trigger: ".container-tech-stack",
+            start: "top bottom",
+            end: "bottom 40%",
+          },
+        });
       };
       gsapSetStyles();
       animateIntro();
       animateDrawings();
+      animateTechStack();
       if (!isSmallScreen) animateStory();
     });
   });

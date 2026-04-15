@@ -9,6 +9,7 @@ import {
   FaPaperPlane,
   FaGithubSquare,
   FaLinkedin,
+  FaReact,
 } from "@utils/react-icons";
 /** About page content */
 export default function About() {
@@ -92,7 +93,7 @@ export default function About() {
               </p>
             </div>
             <div
-              className="hidden text-center relative tablet:flex gap-1 text-3xl items-end min-h-30 h-full"
+              className="hidden text-center relative tablet:flex gap-2 text-3xl items-end min-h-30 h-full"
               aria-hidden="true"
             >
               {" "}
@@ -101,7 +102,7 @@ export default function About() {
                   a
                 </span>{" "}
               </span>
-              <span className="grid grid-cols-[repeat(9,50px)] gap-0.5 relative justify-baseline clip">
+              <span className="grid grid-cols-[repeat(9,50px)] gap-0.5 relative clip">
                 <span className="story-telling frontend py-1.5 px-2.5 rounded-2xl frontend-bg-linear col-start-1 col-span-3 row-start-1">
                   <span>frontend</span>
                 </span>
@@ -112,9 +113,9 @@ export default function About() {
                   <span>building</span>{" "}
                 </span>
               </span>
-              <span className=" story-telling responsive  lift-words">
+              <span className="story-telling lift-words clip">
                 {" "}
-                responsive,{" "}
+                <span className="responsive block">responsive,</span>{" "}
               </span>
               <span className="container-state-driven grid grid-cols-[repeat(4,50px)] clip content-start mb-0.75  rounded-lg">
                 <span className="story-telling state col-start-1 col-span-2 bg-action-color text-dark-foreground rounded-l-sm py-0.5 pl-1.5 flex gap-1.5 items-center z-2">
@@ -137,13 +138,18 @@ export default function About() {
                 </svg>
                 <FaPaperPlane id="paper-plane" />
               </div>
-              <span className="story-telling web lift-words">web</span>{" "}
-              <span className="story-telling applications lift-words">
-                applications
+              <span className="story-telling split-text-story lift-words clip">
+                web applications using
               </span>{" "}
-              <span className="story-telling using lift-words">using</span>{" "}
-              <span className="story-telling React lift-words">React</span>{" "}
-              <span className="story-telling and lift-words">and</span>{" "}
+              <span className="grid grid-cols-[repeat(4,50px) items-center mb-0.75 gap-0.5 clip">
+                <span className="story-telling react col-start-1 col-span-2">
+                  React
+                </span>{" "}
+                <FaReact className="col-start-3 react-icon text-[#61DBFB] bg-primary-color-darker text-5xl font-bold rounded-md z-1" />
+                <span className="story-telling and pl-1 col-start-4">
+                  and
+                </span>{" "}
+              </span>
               <span className="story-telling relative pb-0.5 javascript-after JavaScript">
                 JavaScript
               </span>{" "}
@@ -179,7 +185,7 @@ export default function About() {
         </div>
         <div className="mt-5">
           <h2 className="text-heading-lg text-center">Tech Stack</h2>
-          <ul className="flex flex-wrap gap-y-4 gap-x-2 mt-3 justify-center">
+          <ul className="flex container-tech-stack flex-wrap gap-y-4 gap-x-2 mt-3 justify-center">
             <li>
               <span className="tech-stack">HTML</span>
             </li>

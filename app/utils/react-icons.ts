@@ -5,7 +5,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaHandPaper } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
 import { FaGithubSquare } from "react-icons/fa";
-
+import { FaReact } from "react-icons/fa";
 export {
   FaMapLocationDot,
   MdEmail,
@@ -14,4 +14,5 @@ export {
   FaHandPaper,
   FaPaperPlane,
   FaGithubSquare,
+  FaReact,
 };
