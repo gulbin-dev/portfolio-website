@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.10.0...v1.11.0) (2026-04-19)
+
+
+### Features
+
+* added placeholder image while frame images are still loading ([ee58f8c](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/ee58f8c55dac8018b0821944e85ac42f6a76fcd7))
+* added project contents on discover page ([047e3fc](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/047e3fc94887eee7a9dca6a91c3eb34956a3405f))
+* **page:** added scroll reset function for every navigation ([ee58f8c](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/ee58f8c55dac8018b0821944e85ac42f6a76fcd7))
+
 ## [1.10.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.9.2...v1.10.0) (2026-04-18)
 
 
