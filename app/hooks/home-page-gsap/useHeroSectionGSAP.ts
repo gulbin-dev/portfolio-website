@@ -122,7 +122,7 @@ export const useHeroImageSequence = (isRevealed: boolean) => {
         canvas?.setAttribute("width", "500px");
         canvas?.setAttribute("height", "720px");
 
-        const { placeholderImage, imageURLS, playhead, images } = frameImages();
+        const { placeholderImage, playhead, images } = frameImages();
 
         const imageSequence = (config: ImageSequenceConfig) => {
           const canvasElement = gsap.utils.toArray(
@@ -132,7 +132,7 @@ export const useHeroImageSequence = (isRevealed: boolean) => {
 
           const updateImage = () => {
             const currentImg = images[Math.round(playhead.frame)];
-
+            console.log(currentImg);
             // draw the placeholderImage with blur filter while the current frame still loads
             if (currentImg && !currentImg.complete) {
               ctx!.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -166,18 +166,14 @@ export const useHeroImageSequence = (isRevealed: boolean) => {
             placeholderImage.onload = updateImage;
           }
 
-          // Map through URLs and create Image objects
-          config.urls.forEach((url, i) => {
-            const img = new Image();
-            img.src = url;
+          images.forEach((img, i) => {
             img.onload = () => {
-              // Only redraw if the loaded image is the one we are currently viewing
               if (Math.floor(playhead.frame) === i) updateImage();
             };
-            images.push(img);
           });
 
           updateImage();
+
           // the animation responsible for the frame animation
           return gsap.to(playhead, {
             frame: images.length - 1,
@@ -188,7 +184,6 @@ export const useHeroImageSequence = (isRevealed: boolean) => {
         };
 
         imageSequence({
-          urls: imageURLS, // Array of image URLs
           canvas: "#hero-canvas",
           scrollTrigger: {
             trigger: "#hero-canvas",

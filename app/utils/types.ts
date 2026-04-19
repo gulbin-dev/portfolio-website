@@ -15,7 +15,6 @@ export type PreviewVideoContent = {
 };
 
 export interface ImageSequenceConfig {
-  urls: string[];
   canvas: string | HTMLCanvasElement;
   scrollTrigger: gsap.AnimationVars["scrollTrigger"];
   onUpdate?: () => void;

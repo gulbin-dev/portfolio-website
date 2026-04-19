@@ -383,8 +383,7 @@ export function useAboutImage(isRevealed: boolean) {
           canvas?.setAttribute("width", "500px");
           canvas?.setAttribute("height", "720px");
 
-          const { placeholderImage, imageURLS, playhead, images } =
-            frameImages();
+          const { placeholderImage, playhead, images } = frameImages();
 
           function imageSequence(config: ImageSequenceConfig) {
             const canvasElement = gsap.utils.toArray(
@@ -409,11 +408,10 @@ export function useAboutImage(isRevealed: boolean) {
               }
             };
 
-            // Map through URLs and create Image objects
-            config.urls.forEach((url) => {
-              const img = new Image();
-              img.src = url;
-              images.push(img);
+            images.forEach((img, i) => {
+              img.onload = () => {
+                if (Math.floor(playhead.frame) === i) updateImage();
+              };
             });
 
             // the animation responsible for the frame animation
@@ -426,7 +424,6 @@ export function useAboutImage(isRevealed: boolean) {
             });
           }
           imageSequence({
-            urls: imageURLS, // Array of image URLs
             canvas: "#about-canvas",
             scrollTrigger: {
               trigger: "#about-canvas",
