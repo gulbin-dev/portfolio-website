@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.0...v1.11.1) (2026-04-19)
+
+
+### Bug Fixes
+
+* component prop provided ([ed0cd36](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/ed0cd36bc356b2cf05293515c7877ccdf4e7697d))
+
 ## [1.11.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.10.0...v1.11.0) (2026-04-19)
 
 
