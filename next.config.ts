@@ -15,9 +15,7 @@ const nextConfig: NextConfig = {
     ],
     minimumCacheTTL: 2678400,
   },
-  deploymentId: process.env.GITHUB_SHA
-    ? process.env.GITHUB_SHA.substring(0, 32)
-    : undefined,
+  deploymentId: process.env.VERCEL_GIT_COMMIT_SHA || `local-${Date.now()}`,
 };
 
 export default nextConfig;
