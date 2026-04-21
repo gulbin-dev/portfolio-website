@@ -1,18 +1,73 @@
 import UI_Task from "@components/UI_Task";
-import {
-  useCodeBlocks,
-  useCircles,
-  useTasks,
-  useVSHeader,
-} from "@/app/hooks/home-page-gsap/useVSCodeSection";
-import { useLoading } from "@/app/utils/LoadingContext";
+import { gsap, mediaQueries, ScrollTrigger, useGSAP } from "@utils/gsap";
+import { useLoading } from "@utils/LoadingContext";
 
 export default function VsCodeUI() {
   const { isRevealed } = useLoading();
-  useCodeBlocks(isRevealed);
-  useCircles(isRevealed);
-  useTasks(isRevealed);
-  useVSHeader(isRevealed);
+
+  // handle VSCode section header animation
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(
+        // media queries conditions giving a responsive animation
+        // based on screen size and reduce motion
+        mediaQueries,
+        () => {
+          const skewVSCodeHeader = gsap.quickTo(".vs-code-header", "skewY");
+          const yVSCodeHeader = gsap.quickTo(".vs-code-header", "y");
+          const clampSkew = gsap.utils.clamp(-4, 4);
+          const clampYVSCode = gsap.utils.clamp(-20, 20);
+
+          gsap.to(".vs-code-header", {
+            scrollTrigger: {
+              trigger: ".vs-code-header",
+              start: "top 100%",
+              onUpdate: (self) => {
+                skewVSCodeHeader(clampSkew(self.getVelocity() / 2));
+                yVSCodeHeader(clampYVSCode(self.getVelocity() / 50));
+              },
+            },
+          });
+        },
+      );
+    },
+    { dependencies: [isRevealed], revertOnUpdate: true },
+  );
+
+  // handle fade animation on scroll
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(
+        // media queries conditions giving a responsive animation
+        // based on screen size and reduce motion
+        mediaQueries,
+        (context) => {
+          const { isReduceMotion } = context.conditions ?? {};
+          gsap.set(".code-snippet p, .ui-circle, .task", {
+            autoAlpha: 0,
+            y: isReduceMotion ? 10 : 100,
+          });
+          ScrollTrigger.batch(".code-snippet p, .ui-circle, .task", {
+            onEnter: (elements) => {
+              gsap.to(elements, {
+                y: 0,
+                autoAlpha: 1,
+                stagger: 0.15,
+                overwrite: true,
+              });
+            },
+            onLeaveBack: (elements) =>
+              gsap.set(elements, { opacity: 0, y: 100, overwrite: true }),
+            start: "top 98%",
+          });
+        },
+      );
+    },
+    { dependencies: [isRevealed], revertOnUpdate: true },
+  );
+
   return (
     <section
       aria-hidden="true"

@@ -1,34 +1,131 @@
 "use client";
 
-import { useHeroSection } from "@/app/hooks/home-page-gsap/useHeroSectionGSAP";
 import Link from "next/link";
-import { useLoading } from "@/app/utils/LoadingContext";
+import { useLoading } from "@utils/LoadingContext";
 import dynamic from "next/dynamic";
+import useWindowSizeListener from "@hooks/useWindowSizeListener";
+import { useEffect } from "react";
 
-const Canvas = dynamic(
-  () =>
-    import("./hero-section/HeroSectionComponents").then(
-      (component) => component.Canvas,
-    ),
-  {
-    ssr: false,
-  },
+import { gsap, mediaQueries, SplitText, useGSAP } from "@utils/gsap";
+
+const Canvas = dynamic(() =>
+  import("./hero-section/HeroSectionComponents").then(
+    (component) => component.Canvas,
+  ),
 );
 
 export default function HeroSection() {
   const { isRevealed } = useLoading();
-  useHeroSection(isRevealed);
+  const windowResize = useWindowSizeListener();
+  useEffect(() => {}, [windowResize]);
+
+  // hero section elements animation
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(
+        // media queries conditions giving a responsive animation
+        // based on screen size and reduce motion
+        mediaQueries,
+        (context) => {
+          const { isReduceMotion } = context.conditions ?? {};
+          /** handle animation of CTA buttons */
+          const animateCTA = () => {
+            const keyframes = isReduceMotion
+              ? {
+                  "0%": { opacity: 0 },
+                  "100%": { opacity: 1 },
+                }
+              : {
+                  "0%": { opacity: 0, scaleX: 0, scaleY: 0 },
+                  "75%": { opacity: 1, scaleX: 1.2, scaleY: 1.2 },
+                  "100%": { opacity: 1, scaleX: 1, scaleY: 1 },
+                };
+            gsap.to(".list-discover-button", {
+              duration: 0.5,
+              keyframes: keyframes,
+              scrollTrigger: {
+                trigger: ".list-discover-button",
+                start: "top 95%",
+                end: "bottom bottom",
+              },
+            });
+
+            gsap.to(".list-about-me-button", {
+              duration: 0.8,
+              keyframes: keyframes,
+              scrollTrigger: {
+                trigger: ".list-about-me-button",
+                start: "top 95%",
+                end: "bottom bottom",
+              },
+            });
+          };
+
+          /** handle animation of SplitText */
+          const animateSplitText = () => {
+            document.fonts.ready.then(() => {
+              // 1. Split the text
+              const split_h1 = SplitText.create(".split-words", {
+                type: "words",
+                autoSplit: true,
+              });
+
+              // 2. Initialize Timeline
+              const timeline = gsap.timeline({
+                scrollTrigger: {
+                  trigger: ".split-words",
+                  start: "top 85%",
+                },
+              });
+
+              // 3. Add Text Animation to Timeline
+              if (isReduceMotion) {
+                timeline.from(".split-words", {
+                  y: 100,
+                  autoAlpha: 0,
+                  duration: 1,
+                });
+              } else {
+                timeline
+                  .from(split_h1.words, {
+                    y: 100,
+                    autoAlpha: 0,
+                    stagger: {
+                      amount: 1,
+                      from: "random",
+                      ease: "power4.in",
+                    },
+                  })
+                  .from("#line", {
+                    drawSVG: "100% 100%",
+                    autoAlpha: 0,
+                    duration: 1,
+                    ease: "expo.out",
+                    onComplete: () => split_h1.revert(),
+                  });
+              }
+            });
+          };
+
+          animateCTA();
+          animateSplitText();
+        },
+      );
+    },
+    { dependencies: [isRevealed], revertOnUpdate: true },
+  );
 
   return (
     <section
       id="home-top"
-      className="section w-full h-full overflow-hidden relative pt-10 linear-bg z-0 tablet:pt-1 tablet:h-screen"
+      className="section w-full h-full overflow-hidden relative linear-bg z-0 tablet-landscape:h-fit"
     >
-      <div className=" place-self-center max-w-180 tablet:flex">
-        <div className="relative z-1 px-3 tablet:mt-10 h-full">
+      <div className=" place-self-center max-w-180 h-full tablet-portrait:flex tablet-landscape:h-fit!">
+        <div className="relative z-1 px-3 pt-10 tablet-portrait:pt-20 h-full">
           <h1
             aria-hidden
-            className="split-words text-pretty text-heading-lg tablet:text-heading-xl pt-7 tablet:pt-0"
+            className="split-words text-pretty text-heading-lg tablet-portrait:text-heading-xl pt-7 tablet-portrait:pt-0"
           >
             Frontend Developer{" "}
             <span className="relative">
@@ -57,11 +154,11 @@ export default function HeroSection() {
           <h1 className="sr-only">
             Frontend Developer Building Predictable React Interfaces
           </h1>
-          <p className="fade-in-up mt-4 tablet:mt-3">
+          <p className="fade-in-up mt-4 tablet-portrait:mt-3">
             Helping teams deliver high-performance React applications with a
             focus on accessibility and SEO.
           </p>
-          <ul className="my-6 flex flex-col gap-5.5 w-fit h-full tablet:my-4 tablet:gap-4">
+          <ul className="my-6 flex flex-col gap-5.5 w-fit h-full tablet-portrait:my-4 tablet-portrait:gap-4">
             <li className="list-discover-button opacity-0 group">
               <Link
                 href="/discover"
@@ -92,7 +189,7 @@ export default function HeroSection() {
             </li>
           </ul>
         </div>
-        <div className="relative h-60 w-full z-1 tablet:h-150 overflow-hidden">
+        <div className="relative! h-60 w-full z-1 overflow-hidden tablet-portrait:h-71 tablet-portrait:max-h-71 tablet-portrait:inset-0! tablet-landscape:h-71">
           <Canvas />
         </div>
       </div>
