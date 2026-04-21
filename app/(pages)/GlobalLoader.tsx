@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useLoading } from "../utils/LoadingContext";
+import { useLoading } from "@utils/LoadingContext";
 export default function GlobalLoader() {
   const [isWindowLoaded, setIsWindowLoaded] = useState(false);
   const { setRevealed, isRevealed } = useLoading();

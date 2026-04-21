@@ -12,6 +12,4 @@ const playhead = { frame: 0 };
 const placeholderImage = new Image();
 placeholderImage.src = "/frame-image/profile-frame-1.webp";
 
-export default function frameImages() {
-  return { placeholderImage, playhead, images };
-}
+export const frameImages = { placeholderImage, playhead, images };
