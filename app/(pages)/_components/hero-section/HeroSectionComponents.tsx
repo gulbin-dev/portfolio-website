@@ -40,7 +40,8 @@ export const Canvas = () => {
             if (currentImg && !currentImg.complete) {
               ctx!.clearRect(0, 0, canvasElement.width, canvasElement.height);
               ctx!.filter = "blur(10px)";
-              ctx!.drawImage(placeholderImage, 0, 0);
+              const x = (canvasElement.width - currentImg.width) / 2;
+              ctx!.drawImage(placeholderImage, x, isDesktopScreen ? 80 : 0);
 
               // add text on canvas
               ctx!.filter = "blur(0px)"; // Reset filter so text isn't blurry
