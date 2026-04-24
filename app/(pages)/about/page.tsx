@@ -25,7 +25,8 @@ const AboutCanvas = dynamic(
 
 /** About page content */
 export default function About() {
-  ScrollReset();
+  // ScrollReset();
+
   const { isRevealed } = useLoading();
 
   useGSAP(
@@ -33,14 +34,14 @@ export default function About() {
       const mm = gsap.matchMedia();
       mm.add(mediaQueries, (context) => {
         // media queries conditions giving a responsive animation
-        const { isMobilePortraitScreen, isTabletPortraitScreen, isDesktop } =
-          context.conditions ?? {};
+        const { isMobilePortraitScreen } = context.conditions ?? {};
         ScrollTrigger.defaults({
           toggleActions: "play none none none",
         });
         const smoother = ScrollSmoother.get();
         if (!isMobilePortraitScreen)
           smoother?.effects().forEach((t) => t.kill());
+
         // list of elements with the class "story-telling" used for horizontal scrolling
         const storyTellingElements =
           gsap.utils.toArray<HTMLElement[]>(".story-telling");
@@ -84,27 +85,30 @@ export default function About() {
             gsap.set(".and", {
               yPercent: -102,
             });
+            gsap.set(".javaScript", {
+              opacity: 0,
+              yPercent: 100,
+            });
+            gsap.set(".typeScript", {
+              opacity: 0,
+              yPercent: -100,
+            });
           }
         };
 
         const scrollHorizontal =
           !isMobilePortraitScreen &&
           gsap.to(".tablet-pinned", {
-            xPercent:
-              (isTabletPortraitScreen ? -20 : isDesktop ? -10 : 0) *
-              (storyTellingElements.length - 1),
+            xPercent: -10 * (storyTellingElements.length - 1),
             ease: "none",
             scrollTrigger: {
               trigger: ".tablet-pinned",
-              id: "pinned",
-              markers: true,
               pin: true,
               start: "top top",
               end: () =>
                 "bottom+=" +
-                ((document.querySelector(".tablet-pinned") as HTMLDivElement)
+                (document.querySelector(".tablet-pinned") as HTMLDivElement)
                   ?.offsetWidth +
-                  1600) +
                 "top",
               pinSpacing: true,
               scrub: 1,
@@ -115,8 +119,6 @@ export default function About() {
         if (!isMobilePortraitScreen) {
           ScrollTrigger.create({
             trigger: ".canvas-container",
-            id: "canvas",
-            markers: true,
             pin: true,
             start: 0,
             end: () =>
@@ -208,9 +210,7 @@ export default function About() {
             y: 100,
             scrollTrigger: {
               trigger: ".responsive",
-              start: `left ${
-                isTabletPortraitScreen ? "70%" : isDesktop ? "center" : ""
-              }`,
+              start: "left 70%",
               end: "right 40%",
               containerAnimation: scrollHorizontal || undefined,
             },
@@ -221,13 +221,7 @@ export default function About() {
               scrollTrigger: {
                 trigger: ".a",
                 containerAnimation: scrollHorizontal || undefined,
-                start: `right ${
-                  isTabletPortraitScreen
-                    ? "80%"
-                    : isDesktop
-                      ? "center"
-                      : "center"
-                }`,
+                start: "right 80%",
                 end: "right left",
               },
             });
@@ -240,6 +234,7 @@ export default function About() {
                 ".frontend",
                 {
                   xPercent: 0,
+                  ease: "power2.in",
                 },
                 "-=0.3",
               )
@@ -276,9 +271,7 @@ export default function About() {
               scrollTrigger: {
                 trigger: ".state",
                 containerAnimation: scrollHorizontal || undefined,
-                start: `left ${
-                  isTabletPortraitScreen ? "60%" : isDesktop ? "center" : ""
-                }`,
+                start: "left 70%",
                 end: "right 40%",
               },
             });
@@ -306,13 +299,12 @@ export default function About() {
                 "<",
               );
           };
+
           const animateReact = () => {
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".react-icon",
-                start: `left ${
-                  isTabletPortraitScreen ? "80%" : isDesktop ? "center" : ""
-                }`,
+                start: "left 80%",
                 end: "right 40%",
                 containerAnimation: scrollHorizontal || undefined,
               },
@@ -333,6 +325,51 @@ export default function About() {
               });
           };
 
+          const animateJsTs = () => {
+            const timeline = gsap.timeline({
+              scrollTrigger: {
+                trigger: ".javaScript",
+                start: "left 70%",
+                end: "right 40%",
+                containerAnimation: scrollHorizontal || undefined,
+              },
+            });
+            timeline
+              .to(".javaScript", {
+                opacity: 1,
+                yPercent: 0,
+              })
+              .to(
+                ".typeScript",
+                {
+                  opacity: 1,
+                  yPercent: 0,
+                },
+                "-=0.3",
+              )
+              .to(".divider", {
+                delay: 0.5,
+                rotate: -65,
+                scaleX: 0.3,
+              })
+              .to(
+                ".js-container",
+                {
+                  x: 15,
+                  y: 10,
+                },
+                "<",
+              )
+              .to(
+                ".ts-container",
+                {
+                  x: -8,
+                  y: -10,
+                },
+                "<",
+              );
+          };
+
           document.fonts.ready.then(() => {
             SplitText.create(".split-text-story", {
               type: "words",
@@ -347,9 +384,7 @@ export default function About() {
                   scrollTrigger: {
                     trigger: ".split-text-story",
                     containerAnimation: scrollHorizontal || undefined,
-                    start: `left ${
-                      isTabletPortraitScreen ? "70%" : isDesktop ? "center" : ""
-                    }`,
+                    start: "left 70%",
                     end: "right center",
                   },
                   onComplete: animateReact,
@@ -359,6 +394,7 @@ export default function About() {
           });
           animateFrontendDeveloperBuilding();
           animateStateDriven();
+          animateJsTs();
         };
 
         const animateTechStack = () => {
@@ -389,13 +425,13 @@ export default function About() {
   );
 
   return (
-    <main className="bg-primary-color-darker px-3 mb-4">
+    <main className="bg-primary-color-darker mb-4">
       <section id="about-top" className="flex flex-col relative">
         <div className="canvas-container h-75 tablet-portrait:absolute w-full top-0 left-0  z-400 tablet-portrait:w-55 tablet-portrait:h-screen overflow-hidden">
-          <div className="hidden tablet-portrait:block absolute bg-primary-color-darker w-23 h-full"></div>
+          <div className="hidden tablet-portrait:block absolute bg-primary-color-darker w-[18vw] h-full"></div>
           <AboutCanvas />
         </div>
-        <div className="tablet-pinned relative">
+        <div className="tablet-pinned max-w-225! relative">
           {/* this <div> is used only for animation */}
           <div className="relative tablet-portrait:top-15 tablet-portrait:flex">
             {" "}
@@ -406,7 +442,7 @@ export default function About() {
                 About Me
               </h1>
               <p
-                className="inline-block place-self-center tablet-portrait:text-3xl tablet-portrait:truncate col-start-1"
+                className="inline-block place-self-center tablet-portrait:text-3xl tablet-portrait:truncate col-start-1 mt-3"
                 aria-hidden="true"
               >
                 <span className="flex gap-1 justify-center">
@@ -508,16 +544,23 @@ export default function About() {
                   React
                 </span>{" "}
                 <FaReact className="col-start-3 react-icon text-[#61DBFB] bg-primary-color-darker text-5xl font-bold rounded-md z-1" />
-                <span className="story-telling and pl-1 col-start-4">
+                <span className="story-telling and pl-1 mb-px col-start-4">
                   and
                 </span>{" "}
               </span>
-              <span className="story-telling relative pb-0.5 javascript-after JavaScript">
-                JavaScript
-              </span>{" "}
-              <span className="story-telling slash">/</span>
-              <span className="story-telling relative pb-0.5 typescript-after TypeScript">
-                TypeScript.
+              <span className="mb-[11px] items-center grid grid-cols-[repeat(4,50px)] grid-rows-[repeat(2,20px)] gap-2.5 relative">
+                <span className="clip col-start-1 row-start-1 col-span-2 js-container">
+                  <span className="story-telling relative block pb-0.5 javascript-after javaScript  py-0.5 px-1.5 bg-action-color text-dark-foreground rounded-sm ">
+                    JavaScript
+                  </span>{" "}
+                </span>
+
+                <span className="text-8xl divider absolute left-1/2 -translate-x-1/2 z-1 w-48 h-1 bg-light-foreground"></span>
+                <span className="clip col-start-4 row-start-2 col-span-2 ts-container">
+                  <span className="story-telling relative block pb-0.5 typescript-after typeScript  py-0.5 px-1.5 bg-secondary-color rounded-sm ">
+                    TypeScript.
+                  </span>
+                </span>
               </span>
             </div>
           </div>{" "}
@@ -528,7 +571,9 @@ export default function About() {
             JavaScript/TypeScript.
           </p>
         </div>
-        <div className="relative flex flex-col items-center gap-x-2 mt-6 tablet-portrait:mt-40">
+
+        {/* Contact */}
+        <div className="relative flex flex-col items-center gap-x-2 mt-6 tablet-portrait:mt-50">
           <h2 className="text-heading-lg! tablet-portrait:text-heading-xl!">
             Reach out!
           </h2>
@@ -545,6 +590,7 @@ export default function About() {
             </li>
           </ul>
         </div>
+        {/*  Tech Stack */}
         <div className="mt-5">
           <h2 className="text-heading-lg text-center">Tech Stack</h2>
           <ul className="flex container-tech-stack flex-wrap gap-y-4 gap-x-2 mt-3 justify-center">

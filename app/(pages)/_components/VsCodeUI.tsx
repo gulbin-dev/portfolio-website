@@ -1,8 +1,10 @@
 import { gsap, mediaQueries, ScrollTrigger, useGSAP } from "@utils/gsap";
 import { useLoading } from "@utils/LoadingContext";
+import { useRef } from "react";
 
 export default function VsCodeUI() {
   const { isRevealed } = useLoading();
+  const vsCodeRef = useRef<HTMLElement | null>(null);
 
   // handle VSCode section header animation
   useGSAP(
@@ -31,7 +33,7 @@ export default function VsCodeUI() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [isRevealed], revertOnUpdate: true, scope: vsCodeRef },
   );
 
   // handle fade animation on scroll
@@ -64,11 +66,12 @@ export default function VsCodeUI() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [isRevealed], revertOnUpdate: true, scope: vsCodeRef },
   );
 
   return (
     <section
+      ref={vsCodeRef}
       aria-hidden="true"
       className="section snap w-full h-full  section3-bg"
     >

@@ -7,9 +7,11 @@ import {
   FaLinkedin,
 } from "@utils/react-icons";
 import { gsap, mediaQueries, ScrollTrigger, useGSAP } from "@utils/gsap";
+import { useRef } from "react";
 
 export default function HireMe() {
   const { isRevealed } = useLoading();
+  const hireMeRef = useRef<HTMLElement | null>(null);
 
   useGSAP(
     () => {
@@ -55,11 +57,14 @@ export default function HireMe() {
         );
       });
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [isRevealed], revertOnUpdate: true, scope: hireMeRef },
   );
 
   return (
-    <section className="section snap w-full h-full bg-primary-color-darker py-7 px-3">
+    <section
+      ref={hireMeRef}
+      className="section snap w-full h-full bg-primary-color-darker py-7 px-3"
+    >
       <h2 className="fade-entry text-heading-xl text-center">
         Available for Hire
       </h2>

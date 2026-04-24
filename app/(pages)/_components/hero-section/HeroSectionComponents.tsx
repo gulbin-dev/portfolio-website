@@ -2,9 +2,11 @@ import { useLoading } from "@utils/LoadingContext";
 import { frameImages } from "@utils/imageSequence";
 import { ImageSequenceConfig } from "@utils/types";
 import { gsap, mediaQueries, ScrollSmoother, useGSAP } from "@utils/gsap";
+import { useRef } from "react";
 
 export const Canvas = () => {
   const { isRevealed } = useLoading();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // image sequence animation
   useGSAP(

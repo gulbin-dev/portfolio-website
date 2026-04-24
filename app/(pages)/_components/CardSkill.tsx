@@ -2,11 +2,12 @@ import Image from "next/image";
 import { Video } from "./_card-skill-components/CardSkill";
 import { useLoading } from "@utils/LoadingContext";
 import { gsap, mediaQueries, SplitText, useGSAP } from "@utils/gsap";
+import { useRef } from "react";
 /** card-skill component */
 
 export default function CardSkill() {
   const { isRevealed } = useLoading();
-
+  const cardSkillRef = useRef<HTMLElement | null>(null);
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -75,11 +76,12 @@ export default function CardSkill() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [isRevealed], revertOnUpdate: true, scope: cardSkillRef },
   );
 
   return (
     <section
+      ref={cardSkillRef}
       id="pin-section"
       className="section w-full! h-full relative mt-0! overflow-hidden linear-bg pb-8 text-light-foreground"
     >

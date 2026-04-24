@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     isRevealed && (
-      <footer className="snap h-full bg-primary-color-darker w-full pb-1">
+      <footer className="h-full bg-primary-color-darker w-full pb-1">
         <div className="max-w-180 place-self-center w-full px-3">
           <Link href="/" className="text-white">
             <Image

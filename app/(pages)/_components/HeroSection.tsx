@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import useWindowSizeListener from "@hooks/useWindowSizeListener";
 import { useEffect } from "react";
 import { gsap, mediaQueries, SplitText, useGSAP } from "@utils/gsap";
+import { useRef } from "react";
 
 const Canvas = dynamic(() =>
   import("./hero-section/HeroSectionComponents").then(
@@ -16,6 +17,8 @@ const Canvas = dynamic(() =>
 export default function HeroSection() {
   const { isRevealed } = useLoading();
   const windowResize = useWindowSizeListener();
+  const heroSectionRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {}, [windowResize]);
 
   // hero section elements animation
@@ -118,11 +121,12 @@ export default function HeroSection() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [isRevealed], revertOnUpdate: true, scope: heroSectionRef },
   );
 
   return (
     <section
+      ref={heroSectionRef}
       id="home-top"
       className="section w-full h-full overflow-hidden relative linear-bg z-0 tablet-portrait:h-screen"
     >
