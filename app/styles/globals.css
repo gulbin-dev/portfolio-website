@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@import "./styles.css";
+@import "./components.css";
+@import "./utilities.css";
+
 /****************************
 *
 * Base classes 
@@ -20,6 +22,7 @@
     color: var(--color-light-foreground);
     font-kerning: none;
     text-rendering: optimizeSpeed;
+    scrollbar-gutter: stable;
   }
   h1 {
     line-height: 50px;
@@ -68,6 +71,7 @@
     font-family: var(--font-important) !important;
   }
 }
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     interpolate-size: allow-keywords;
@@ -94,8 +98,9 @@
   --text-heading-xl: clamp(1.8em, 3vw, 3.6em);
   --text-heading-lg: clamp(1.4em, 3vw, 3.2em);
   --text-heading-md: clamp(0.8em, 3vw, 2.8em);
+  --breakpoint-mobile-portrait: 480px;
   --breakpoint-mobile-landscape: 481px;
   --breakpoint-tablet-portrait: 768px;
   --breakpoint-tablet-landscape: 992px;
-  --breakpoint-desktop: 1200px;
+  --breakpoint-desktop: 1024px;
 }
