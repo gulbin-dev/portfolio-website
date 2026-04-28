@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.10.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.9.2...v1.10.0) (2026-04-28)
+
+
+### Features
+
+* added placeholder image while frame images are still loading ([23f7c04](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/23f7c048a5e091b47bf4b68eda4caed096e39024))
+
+
+### Bug Fixes
+
+* improve UI animations ([23f7c04](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/23f7c048a5e091b47bf4b68eda4caed096e39024))
+
 ## [1.12.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.4...v1.12.0) (2026-04-28)
 
 
