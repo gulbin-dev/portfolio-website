@@ -54,7 +54,10 @@ export default function PagesWrapper({
 
   return (
     <div id="smooth-wrapper" className="max-h-screen! overflow-hidden!">
-      <div id="smooth-content" className="bg-primary-color-darker">
+      <div
+        id="smooth-content"
+        className="bg-primary-color-darker min-h-screen!"
+      >
         {children}
       </div>
     </div>
