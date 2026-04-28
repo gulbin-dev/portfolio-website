@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { ScrollTrigger } from "@utils/gsap/gsap";
 
 /** Custom hook to get window size when resizing the window  */
 export default function useWindowSizeListener() {
@@ -12,7 +11,6 @@ export default function useWindowSizeListener() {
       clearTimeout(timeoutId);
       // Only update state after user stops resizing for 200ms
       timeoutId = setTimeout(() => {
-        ScrollTrigger.refresh(); // Refresh ScrollTrigger on window resize
         setResizeKey((prev) => prev + 1);
       }, 200);
     };

@@ -1,21 +1,83 @@
+"use client";
+
 import Link from "next/link";
-import useHireMeGSAP from "@/app/hooks/home-page-gsap/useHireMeGSAP";
 import {
   FaMapLocationDot,
   MdEmail,
   RiTeamFill,
   FaLinkedin,
 } from "@utils/react-icons";
+import { gsap, mediaQueries, ScrollTrigger, useGSAP } from "@utils/gsap";
+import { useRef } from "react";
 
 export default function HireMe() {
-  useHireMeGSAP();
+  const hireMeRef = useRef<HTMLElement | null>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(mediaQueries, (context) => {
+        const { reduceMotion } = context.conditions ?? {};
+        const fadeEntries: HTMLElement[] = gsap.utils.toArray(".fade-entry");
+        const icons: HTMLElement[] = gsap.utils.toArray(".icons");
+
+        gsap.defaults({
+          duration: 0.8,
+        });
+        ScrollTrigger.defaults({
+          start: "top 80%",
+        });
+
+        ScrollTrigger.create({
+          trigger: hireMeRef.current,
+          start: "top bottom",
+          onEnter: () => {
+            fadeEntries.forEach((el) =>
+              gsap.to(el, {
+                autoAlpha: 1,
+                y: 0,
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 90%",
+                },
+              }),
+            );
+            icons.forEach((icon) =>
+              gsap.to(icon, {
+                keyframes: reduceMotion
+                  ? {
+                      "50%": { autoAlpha: 1 },
+                    }
+                  : {
+                      "25%": { rotate: 25, autoAlpha: 1 },
+                      "50%": { rotate: -15 },
+                      "75%": { rotate: 15 },
+                      "100%": { rotate: 0 },
+                    },
+                ease: "circ.out",
+                transformOrigin: "bottom center",
+                scrollTrigger: {
+                  trigger: icon,
+                },
+              }),
+            );
+          },
+        });
+      });
+    },
+    { dependencies: [], scope: hireMeRef },
+  );
+
   return (
-    <section className="section snap w-full h-full bg-primary-color-darker py-7 px-3">
+    <section
+      ref={hireMeRef}
+      className="section snap w-full h-full bg-primary-color-darker py-7 px-3"
+    >
       <h2 className="fade-entry text-heading-xl text-center">
         Available for Hire
       </h2>
       <div className="max-w-180 place-self-center">
-        <ul className="flex flex-col gap-8 mt-6 tablet:flex-row items-center">
+        <ul className="flex flex-col gap-8 mt-6 tablet-portrait:flex-row items-center place-self-center">
           <li className="card-container">
             <FaMapLocationDot className="icons" aria-hidden />
             <div className="content-container">
@@ -43,7 +105,7 @@ export default function HireMe() {
         <p className="fade-entry mt-2 text-center">
           You can reach me and let&apos;s work together
         </p>
-        <ul className="flex flex-col gap-8 mt-6 tablet:flex-row tablet:justify-center">
+        <ul className="flex flex-col gap-8 mt-6 tablet-portrait:flex-row tablet-portrait:justify-center place-self-center">
           <li className="card-container">
             <FaLinkedin className="icons" />
             <div className="content-container">

@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.12.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.4...v1.12.0) (2026-04-28)
+
+
+### Features
+
+* added project loader UI ([0ed3f26](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/0ed3f26f7f3956bbd0cfc627db59e6652d20d1b8))
+
+
+### Bug Fixes
+
+* image load ([3a0e241](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/3a0e2415a38018dc41efc6ccb857a6b3b1686122))
+
+## [1.11.4](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.3...v1.11.4) (2026-04-28)
+
+
+### Bug Fixes
+
+* improve UI animations ([2f1d925](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/2f1d9257e885b0f3ca25c24798dbbf19fcf798f9))
+
+## [1.11.3](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.2...v1.11.3) (2026-04-21)
+
+
+### Bug Fixes
+
+* added eager on loading logo image ([94ca30b](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/94ca30b63083766c0bcded424b49268ba3b82c2c))
+* **hooks:** improve performance by initializing the image once for concurrent navigations ([3265074](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/3265074344cfec0645ceba75c03517dc46e316bd))
+* **next.config:** fix deploymentID ([2283641](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/2283641d7ec3818e0ec4e2ce2e0eb70b61874dc7))
+
+## [1.11.2](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.1...v1.11.2) (2026-04-19)
+
+
+### Bug Fixes
+
+* image dimension ([8a7ccdd](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/8a7ccdd47952c2d9200d21b7b7f6618561340934))
+
+## [1.11.1](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.11.0...v1.11.1) (2026-04-19)
+
+
+### Bug Fixes
+
+* component prop provided ([ed0cd36](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/ed0cd36bc356b2cf05293515c7877ccdf4e7697d))
+
+## [1.11.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.10.0...v1.11.0) (2026-04-19)
+
+
+### Features
+
+* added placeholder image while frame images are still loading ([ee58f8c](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/ee58f8c55dac8018b0821944e85ac42f6a76fcd7))
+* added project contents on discover page ([047e3fc](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/047e3fc94887eee7a9dca6a91c3eb34956a3405f))
+* **page:** added scroll reset function for every navigation ([ee58f8c](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/ee58f8c55dac8018b0821944e85ac42f6a76fcd7))
+
+## [1.10.0](https://github.com/gulbin-dev/GulbinDev-Portfolio/compare/v1.9.2...v1.10.0) (2026-04-18)
+
+
+### Features
+
+* added global loader in sync with page loads ([20b39b6](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/20b39b6583baa32beea7b4fd672c286dd2e302a4))
+
+
+### Bug Fixes
+
+* SmoothScroll scroll calculation ([4b11790](https://github.com/gulbin-dev/GulbinDev-Portfolio/commit/4b117904991f3292e836901cf5cf25d5b568ae7e))
+
 ## [1.9.2](https://github.com/gulbin-dev/portfolio-website-2/compare/v1.9.1...v1.9.2) (2026-04-14)
 
 
