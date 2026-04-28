@@ -1,9 +1,9 @@
+"use client";
+
 import { gsap, mediaQueries, ScrollTrigger, useGSAP } from "@utils/gsap";
-import { useLoading } from "@utils/LoadingContext";
 import { useRef } from "react";
 
-export default function VsCodeUI() {
-  const { isRevealed } = useLoading();
+export default function VSCodeUI() {
   const vsCodeRef = useRef<HTMLElement | null>(null);
 
   // handle VSCode section header animation
@@ -24,6 +24,7 @@ export default function VsCodeUI() {
             scrollTrigger: {
               trigger: ".vs-code-header",
               start: "top 100%",
+              end: "bottom top",
               onUpdate: (self) => {
                 skewVSCodeHeader(clampSkew(self.getVelocity() / 2));
                 yVSCodeHeader(clampYVSCode(self.getVelocity() / 50));
@@ -33,7 +34,7 @@ export default function VsCodeUI() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true, scope: vsCodeRef },
+    { dependencies: [], scope: vsCodeRef },
   );
 
   // handle fade animation on scroll
@@ -44,13 +45,9 @@ export default function VsCodeUI() {
         // media queries conditions giving a responsive animation
         // based on screen size and reduce motion
         mediaQueries,
-        (context) => {
-          const { isReduceMotion } = context.conditions ?? {};
-          gsap.set(".code-snippet p, .ui-circle, .task", {
-            autoAlpha: 0,
-            y: isReduceMotion ? 10 : 100,
-          });
-          ScrollTrigger.batch(".code-snippet p, .ui-circle, .task", {
+
+        () => {
+          ScrollTrigger.batch(".code-snippet p", {
             onEnter: (elements) => {
               gsap.to(elements, {
                 y: 0,
@@ -66,7 +63,7 @@ export default function VsCodeUI() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true, scope: vsCodeRef },
+    { dependencies: [], scope: vsCodeRef },
   );
 
   return (

@@ -1,4 +1,5 @@
-"use cleint";
+"use client";
+
 /**
  * This file is used to import all the Gsap plugins and Gsap itself once,
  * register all the plugins at once and export it to be used across the project.
@@ -6,6 +7,7 @@
  */
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+
 import {
   ScrollTrigger,
   SplitText,
@@ -27,6 +29,10 @@ gsap.registerPlugin(
   ScrambleTextPlugin,
 );
 
+ScrollTrigger.defaults({
+  toggleActions: "play none none none",
+});
+
 /**
  * Exports all the Gsap plugins and Gsap itself to be used across the project.
  */
@@ -44,7 +50,7 @@ export {
 /** Media query conditions used for responsive animation with GSAP matchMedia  */
 export const mediaQueries = {
   isMobilePortraitScreen: "(max-width: 480px)",
-  isMobileLandscapeScreen: "(min-width: 481px) and (max-width: 768px)",
+  isMobileLandscapeScreen: "(min-width: 481px) and (max-width: 767px)",
   isTabletPortraitScreen: "(min-width: 768px) and (max-width: 1024px)",
   isDesktopScreen: "(min-width: 1024px)",
   isReduceMotion: "(prefers-reduced-motion: reduce)",

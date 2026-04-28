@@ -1,11 +1,8 @@
-import { useLoading } from "@utils/LoadingContext";
 import { gsap, mediaQueries, useGSAP, ScrollSmoother } from "@utils/gsap";
 import { frameImages } from "@utils/imageSequence";
 import { ImageSequenceConfig } from "@utils/types";
 
 export default function AboutCanvas() {
-  const { isRevealed } = useLoading();
-
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -27,10 +24,6 @@ export default function AboutCanvas() {
             isDesktopScreen,
           } = context.conditions ?? {};
 
-          const canvas = document?.getElementById("about-canvas");
-          canvas?.setAttribute("width", "420px");
-          canvas?.setAttribute("height", "720px");
-
           const { placeholderImage, playhead, images } = frameImages;
 
           function imageSequence(config: ImageSequenceConfig) {
@@ -38,9 +31,9 @@ export default function AboutCanvas() {
               config.canvas,
             )[0] as HTMLCanvasElement;
             const ctx = canvasElement.getContext("2d");
-            if (isMobilePortraitScreen) ctx?.scale(1, 1);
-            else if (isTabletPortraitScreen) ctx?.scale(0.6, 0.6);
-            else if (isDesktopScreen) ctx?.scale(0.7, 0.7);
+            if (isMobilePortraitScreen) canvasElement.style.scale = "1";
+            else if (isTabletPortraitScreen) canvasElement.style.scale = "0.6";
+            else if (isDesktopScreen) canvasElement.style.scale = "0.7";
 
             const updateImage = () => {
               const currentImg = images[Math.round(playhead.frame)];
@@ -85,13 +78,15 @@ export default function AboutCanvas() {
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [], revertOnUpdate: true },
   );
 
   return (
     <canvas
       id="about-canvas"
-      className="absolute left-3 top-20 tablet-portrait:top-12"
+      className="absolute left-0! top-20 tablet-portrait:top-0 origin-left"
+      width={420}
+      height={720}
     ></canvas>
   );
 }

@@ -1,12 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import { Video } from "./_card-skill-components/CardSkill";
-import { useLoading } from "@utils/LoadingContext";
-import { gsap, mediaQueries, SplitText, useGSAP } from "@utils/gsap";
+import {
+  gsap,
+  mediaQueries,
+  SplitText,
+  useGSAP,
+  ScrollTrigger,
+} from "@utils/gsap";
 import { useRef } from "react";
 /** card-skill component */
 
 export default function CardSkill() {
-  const { isRevealed } = useLoading();
   const cardSkillRef = useRef<HTMLElement | null>(null);
   useGSAP(
     () => {
@@ -16,67 +22,72 @@ export default function CardSkill() {
         // based on screen size and reduce motion
         mediaQueries,
         (context) => {
-          if (!isRevealed) return;
+          // if (!isRevealed) return;
           const { reduceMotion, isSmallScreen } = context.conditions ?? {};
 
-          const listCardSkills =
-            gsap.utils.toArray<HTMLElement[]>(".list-card-skill");
-          gsap.set(listCardSkills, { y: 100, opacity: 0 });
-          listCardSkills.forEach((el, i) =>
-            gsap.to(el, {
-              y: 0,
-              opacity: 1,
-              scrollTrigger: {
-                trigger: listCardSkills[i],
-                start: isSmallScreen ? "20% 60%" : "30% 60%",
-                end: "bottom 20%",
-              },
-            }),
-          );
+          ScrollTrigger.create({
+            trigger: "#pin-section",
+            start: "top bottom",
+            //  wait for fonts to be loaded before animating SplitText
+            onEnter: () =>
+              document.fonts.ready.then(() => {
+                const cardSkillP = SplitText.create(".card-skill-p", {
+                  type: "words",
+                  autoSplit: true,
+                  mask: "words",
+                });
 
-          //  wait for fonts to be loaded before animating SplitText
-          document.fonts.ready.then(() => {
-            const cardSkillP = SplitText.create(".card-skill-p", {
-              type: "words",
-              autoSplit: true,
-              mask: "words",
-            });
-
-            const timeline = gsap.timeline({
-              scrollTrigger: {
-                trigger: ".card-skill-header",
-                start: "top 70%",
-              },
-            });
-            timeline
-              .fromTo(
-                ".card-skill-header",
-                {
-                  y: -100,
-                  opacity: 0,
-                },
-                { y: 0, opacity: 1 },
-              )
-              .from(
-                cardSkillP.words,
-                {
-                  y: -50,
-                  opacity: 0,
-                  autoAlpha: 0,
-                  lazy: false,
-                  stagger: {
-                    amount: 0.8,
-                    from: "random",
-                    ease: reduceMotion ? "none" : "power4.in",
+                const timeline = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: ".card-skill-header",
+                    start: "top 70%",
                   },
-                },
-                "-=0.5",
-              );
+                  onStart: () => {
+                    const listCardSkills =
+                      gsap.utils.toArray<HTMLElement[]>(".list-card-skill");
+                    listCardSkills.forEach((el, i) =>
+                      gsap.to(el, {
+                        y: 0,
+                        autoAlpha: 1,
+                        scrollTrigger: {
+                          trigger: listCardSkills[i],
+                          start: isSmallScreen ? "20% 60%" : "30% 60%",
+                          end: "bottom 20%",
+                        },
+                      }),
+                    );
+                  },
+                });
+                timeline
+                  .fromTo(
+                    ".card-skill-header",
+                    {
+                      y: -100,
+                      opacity: 0,
+                    },
+                    { y: 0, opacity: 1 },
+                  )
+                  .from(
+                    cardSkillP.words,
+                    {
+                      y: -50,
+                      opacity: 0,
+                      autoAlpha: 0,
+                      lazy: false,
+                      stagger: {
+                        amount: 0.8,
+                        from: "random",
+                        ease: reduceMotion ? "none" : "power4.in",
+                      },
+                    },
+                    "-=0.5",
+                  );
+              }),
           });
         },
       );
     },
-    { dependencies: [isRevealed], revertOnUpdate: true, scope: cardSkillRef },
+    { dependencies: [], scope: cardSkillRef },
   );
 
   return (

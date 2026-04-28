@@ -1,5 +1,6 @@
+"use client";
+
 import Link from "next/link";
-import { useLoading } from "@utils/LoadingContext";
 import {
   FaMapLocationDot,
   MdEmail,
@@ -10,7 +11,6 @@ import { gsap, mediaQueries, ScrollTrigger, useGSAP } from "@utils/gsap";
 import { useRef } from "react";
 
 export default function HireMe() {
-  const { isRevealed } = useLoading();
   const hireMeRef = useRef<HTMLElement | null>(null);
 
   useGSAP(
@@ -26,38 +26,46 @@ export default function HireMe() {
         });
         ScrollTrigger.defaults({
           start: "top 80%",
-          toggleActions: "play none none reverse",
         });
-        fadeEntries.forEach((el) =>
-          gsap.from(el, {
-            opacity: 0,
-            y: 50,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none reset",
-            },
-          }),
-        );
-        icons.forEach((icon) =>
-          gsap.from(icon, {
-            keyframes: {
-              "0%": { rotate: -25, autoAlpha: 0 },
-              "25%": { rotate: 25, autoAlpha: 1 },
-              "50%": { rotate: -15 },
-              "75%": { rotate: 15 },
-              "100%": { rotate: 0 },
-            },
-            ease: "circ.out",
-            transformOrigin: "bottom center",
-            scrollTrigger: {
-              trigger: icon,
-            },
-          }),
-        );
+
+        ScrollTrigger.create({
+          trigger: hireMeRef.current,
+          start: "top bottom",
+          onEnter: () => {
+            fadeEntries.forEach((el) =>
+              gsap.to(el, {
+                autoAlpha: 1,
+                y: 0,
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 90%",
+                },
+              }),
+            );
+            icons.forEach((icon) =>
+              gsap.to(icon, {
+                keyframes: reduceMotion
+                  ? {
+                      "50%": { autoAlpha: 1 },
+                    }
+                  : {
+                      "25%": { rotate: 25, autoAlpha: 1 },
+                      "50%": { rotate: -15 },
+                      "75%": { rotate: 15 },
+                      "100%": { rotate: 0 },
+                    },
+                ease: "circ.out",
+                transformOrigin: "bottom center",
+                scrollTrigger: {
+                  trigger: icon,
+                },
+              }),
+            );
+          },
+        });
       });
     },
-    { dependencies: [isRevealed], revertOnUpdate: true, scope: hireMeRef },
+    { dependencies: [], scope: hireMeRef },
   );
 
   return (

@@ -1,127 +1,112 @@
 "use client";
 
 import Link from "next/link";
-import { useLoading } from "@utils/LoadingContext";
 import dynamic from "next/dynamic";
-import useWindowSizeListener from "@hooks/useWindowSizeListener";
-import { useEffect } from "react";
 import { gsap, mediaQueries, SplitText, useGSAP } from "@utils/gsap";
 import { useRef } from "react";
 
-const Canvas = dynamic(() =>
-  import("./hero-section/HeroSectionComponents").then(
-    (component) => component.Canvas,
-  ),
+const Canvas = dynamic(
+  () =>
+    import("./hero-section/HeroSectionComponents").then(
+      (component) => component.Canvas,
+    ),
+  {
+    ssr: false,
+  },
 );
 
 export default function HeroSection() {
-  const { isRevealed } = useLoading();
-  const windowResize = useWindowSizeListener();
   const heroSectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {}, [windowResize]);
 
   // hero section elements animation
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add(
-        // media queries conditions giving a responsive animation
-        // based on screen size and reduce motion
-        mediaQueries,
-        (context) => {
-          const { isReduceMotion } = context.conditions ?? {};
-          /** handle animation of CTA buttons */
-          gsap.set(".hero-p", { opacity: 0, y: 100 });
-          const animateCTA = () => {
-            const keyframes = isReduceMotion
-              ? {
-                  "0%": { opacity: 0 },
-                  "100%": { opacity: 1 },
-                }
-              : {
-                  "0%": { opacity: 0, scaleX: 0, scaleY: 0 },
-                  "75%": { opacity: 1, scaleX: 1.2, scaleY: 1.2 },
-                  "100%": { opacity: 1, scaleX: 1, scaleY: 1 },
-                };
-            gsap.to(".list-discover-button", {
-              duration: 0.5,
-              keyframes: keyframes,
-              scrollTrigger: {
-                trigger: ".list-discover-button",
-                start: "bottom bottom",
-                end: "bottom+=150 bottom",
-              },
-            });
+      mm.add(mediaQueries, (context) => {
+        const { isReduceMotion } = context.conditions ?? {};
 
-            gsap.to(".list-about-me-button", {
-              duration: 0.8,
-              keyframes: keyframes,
-              scrollTrigger: {
-                trigger: ".list-about-me-button",
-                start: "bottom bottom",
-                end: "bottom+=150 bottom",
-              },
-            });
-          };
-
-          /** handle animation of SplitText */
-          const animateSplitText = () => {
-            document.fonts.ready.then(() => {
-              // 1. Split the text
-              const split_h1 = SplitText.create(".split-words", {
-                type: "words",
-                autoSplit: true,
-              });
-
-              // 2. Initialize Timeline
-              const timeline = gsap.timeline({
-                scrollTrigger: {
-                  trigger: ".split-words",
-                  start: "top 85%",
-                },
-              });
-
-              // 3. Add Text Animation to Timeline
-              if (isReduceMotion) {
-                timeline.from(".split-words", {
-                  y: 100,
-                  autoAlpha: 0,
-                  duration: 1,
-                });
-              } else {
-                timeline
-                  .from(split_h1.words, {
-                    y: 100,
-                    autoAlpha: 0,
-                    stagger: {
-                      amount: 1,
-                      from: "random",
-                      ease: "power4.in",
-                    },
-                  })
-                  .from("#line", {
-                    drawSVG: "100% 100%",
-                    autoAlpha: 0,
-                    duration: 1,
-                    ease: "expo.out",
-                    onComplete: () => split_h1.revert(),
-                  });
-              }
-            });
-          };
-          gsap.to(".hero-p", {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power4.out",
+        // Wait for fonts to be ready
+        document.fonts.ready.then(() => {
+          // Split text into words
+          const split_h1 = SplitText.create(".hero-header", {
+            type: "words",
+            autoSplit: true,
+            wordsClass: "hero-split-word",
           });
-          animateCTA();
-          animateSplitText();
-        },
-      );
+
+          // Initialize Timeline
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: ".hero-header",
+              start: "top 85%",
+            },
+          });
+
+          if (isReduceMotion) {
+            timeline.to(".hero-header", {
+              autoAlpha: 1,
+              duration: 1,
+            });
+          } else {
+            timeline
+              .to(split_h1.words, {
+                y: 0,
+                autoAlpha: 1,
+                stagger: {
+                  each: 0.1,
+                  from: "random",
+                  ease: "power2.out",
+                },
+              })
+
+              .from("#line", {
+                drawSVG: "100% 100%",
+                autoAlpha: 0,
+                duration: 1,
+                ease: "expo.out",
+                // onComplete: () => split_h1.revert(),
+              });
+          }
+        });
+
+        gsap.to(".hero-p", {
+          y: 0,
+          autoAlpha: 1,
+          duration: 1,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".hero-p",
+            start: "bottom bottom",
+          },
+        });
+
+        const keyframes = isReduceMotion
+          ? { "0%": { autoAlpha: 0 }, "100%": { autoAlpha: 1 } }
+          : {
+              "0%": { autoAlpha: 0, scaleX: 0, scaleY: 0 },
+              "75%": { autoAlpha: 1, scaleX: 1.2, scaleY: 1.2 },
+              "100%": { scaleX: 1, scaleY: 1 },
+            };
+
+        gsap.utils
+          .toArray<
+            HTMLElement[]
+          >([".list-discover-button", ".list-about-me-button"])
+          .forEach(async (btn, i) => {
+            gsap.to(btn, {
+              duration: 0.5 + i * 0.3,
+              keyframes,
+              scrollTrigger: {
+                trigger: btn,
+                start: "bottom bottom",
+                end: "bottom+=150 bottom",
+                toggleActions: "play none none none",
+              },
+            });
+          });
+      });
     },
-    { dependencies: [isRevealed], revertOnUpdate: true, scope: heroSectionRef },
+    { dependencies: [], scope: heroSectionRef },
   );
 
   return (
@@ -130,17 +115,14 @@ export default function HeroSection() {
       id="home-top"
       className="section w-full h-full overflow-hidden relative linear-bg z-0 tablet-portrait:h-screen"
     >
-      <div className="place-self-center max-w-180 h-full tablet-portrait:flex tablet-landscape:h-fit!">
-        <div className="relative z-1 px-3 pt-10 tablet-portrait:pt-15 h-full">
-          <h1
-            aria-hidden
-            className="split-words text-pretty text-heading-lg tablet-portrait:text-heading-xl pt-7 tablet-portrait:pt-0 desktop:text-heading-md"
-          >
+      <div className="flex flex-col place-self-center max-w-180 h-full tablet-portrait:flex-row tablet-landscape:h-fit!">
+        <div className="z-1 px-3 pt-10 tablet-portrait:pt-15 h-full">
+          <h1 aria-hidden className="hero-header hero-header">
             Frontend Developer{" "}
             <span className="relative">
               Building
               <svg
-                className="absolute -bottom-2  tablet-portrait:scale-y-50"
+                className="absolute left-0 -bottom-2  tablet-portrait:scale-y-50"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 99.98 16.76"
               >
@@ -163,12 +145,12 @@ export default function HeroSection() {
           <h1 className="sr-only">
             Frontend Developer Building Predictable React Interfaces
           </h1>
-          <p className="hero-p mt-4 tablet-portrait:mt-3">
+          <p className="hero-p mt-4 tablet-portrait:mt-3 translate-y-12.5 invisible">
             Helping teams deliver high-performance React applications with a
             focus on accessibility and SEO.
           </p>
           <ul className="my-6 flex flex-col gap-5.5 w-fit h-full tablet-portrait:my-4 tablet-portrait:gap-4">
-            <li className="list-discover-button opacity-0 group">
+            <li className="list-discover-button invisible group">
               <Link
                 href="/discover"
                 className="relative block w-30 h-5 rounded-lg bg-action-color text-dark-foreground overflow-hidden font-bold"
@@ -182,7 +164,7 @@ export default function HeroSection() {
               </Link>
             </li>
 
-            <li className="list-about-me-button opacity-0 group">
+            <li className="list-about-me-button autoAlpha group">
               <Link
                 href="/about"
                 className="relative inline-block w-30 h-5 rounded-lg bg-action-color text-dark-foreground overflow-hidden font-bold"
@@ -198,7 +180,7 @@ export default function HeroSection() {
             </li>
           </ul>
         </div>
-        <div className="relative! h-60 w-full z-1 overflow-hidden tablet-portrait:h-screen tablet-portrait:inset-0!">
+        <div className="relative top-0 left-0 h-60 min-w-53 z-1 overflow-hidden tablet-portrait:h-screen">
           <Canvas />
         </div>
       </div>

@@ -1,7 +1,5 @@
 "use client";
 
-import { useLoading } from "@utils/LoadingContext";
-import ScrollReset from "@utils/ScrollReset";
 import dynamic from "next/dynamic";
 import {
   FaHandPaper,
@@ -21,23 +19,18 @@ import {
 
 const AboutCanvas = dynamic(
   () => import("@/app/(pages)/about/_components/AboutCanvas"),
+  { ssr: false },
 );
 
 /** About page content */
 export default function About() {
-  // ScrollReset();
-
-  const { isRevealed } = useLoading();
-
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       mm.add(mediaQueries, (context) => {
         // media queries conditions giving a responsive animation
         const { isMobilePortraitScreen } = context.conditions ?? {};
-        ScrollTrigger.defaults({
-          toggleActions: "play none none none",
-        });
+
         const smoother = ScrollSmoother.get();
         if (!isMobilePortraitScreen)
           smoother?.effects().forEach((t) => t.kill());
@@ -49,57 +42,27 @@ export default function About() {
         /**
          * A function to set initial styles for animation
          */
-        const gsapSetStyles = () => {
-          gsap.set("#paper-plane", { opacity: 0, scale: 0.5 });
-          if (isMobilePortraitScreen) gsap.set(".hand-icon", { opacity: 0 });
 
-          if (!isMobilePortraitScreen) {
-            gsap.set(".a", {
-              x: -50,
+        if (!isMobilePortraitScreen) {
+          const animateTechStack = () => {
+            const techStacks = gsap.utils.toArray<HTMLElement[]>(".tech-stack");
+            gsap.to(techStacks, {
+              y: 0,
+              autoAlpha: 1,
+              stagger: {
+                amount: 1,
+                from: "start",
+              },
+              scrollTrigger: {
+                trigger: ".container-tech-stack",
+                start: "top bottom",
+                end: "bottom 40%",
+              },
             });
-            gsap.set(".frontend", {
-              xPercent: -101,
-            });
-            gsap.set(".developer", {
-              transformOrigin: "top left",
-              rotate: 180,
-              y: -30,
-              autoAlpha: 0,
-            });
-            gsap.set(".building", {
-              transformOrigin: "bottom center",
-              y: 30,
-              scaleY: 0,
-            });
-            gsap.set(".hyphen", {
-              transformOrigin: "center",
-              rotate: 90,
-              scaleX: 10,
-            });
-            gsap.set(".react-icon", {
-              x: -150,
-            });
-            gsap.set(".react", {
-              x: -100,
-            });
-            gsap.set(".and", {
-              yPercent: -102,
-            });
-            gsap.set(".javaScript", {
-              opacity: 0,
-              yPercent: 100,
-            });
-            gsap.set(".typeScript", {
-              opacity: 0,
-              yPercent: -100,
-            });
-          }
-        };
+          };
 
-        const scrollHorizontal =
-          !isMobilePortraitScreen &&
-          gsap.to(".tablet-pinned", {
-            xPercent: -10 * (storyTellingElements.length - 1),
+          const scrollHorizontal = gsap.to(".tablet-pinned", {
+            x: -120 * storyTellingElements.length,
             ease: "none",
             scrollTrigger: {
               trigger: ".tablet-pinned",
@@ -113,86 +76,23 @@ export default function About() {
               pinSpacing: true,
               scrub: 1,
               invalidateOnRefresh: true,
+              onLeave: animateTechStack,
             },
           });
 
-        if (!isMobilePortraitScreen) {
-          ScrollTrigger.create({
-            trigger: ".canvas-container",
-            pin: true,
-            start: 0,
-            end: () =>
-              (document.querySelector(".tablet-pinned") as HTMLDivElement)
-                ?.offsetHeight +
-              "+=" +
-              (document.querySelector(".tablet-pinned") as HTMLDivElement)
-                ?.offsetWidth +
-              "top",
-          });
-        }
-
-        // animation of the "Hi!" word and the hand icon
-        const animateIntro = () => {
-          const timeline = isMobilePortraitScreen
-            ? gsap.timeline({
-                scrollTrigger: {
-                  trigger: ".word-hi",
-                  start: "top center",
-                  end: "right center",
-                },
-              })
-            : gsap.timeline();
-          timeline.to(".name1", {
-            duration: 2,
-            scrambleText: {
-              text: "Joshua Glenn R. Gulbin",
-              chars: "01 ",
-              oldClass: "unicode",
-              newClass: "post-scramble",
-              speed: 0.5,
-              revealDelay: 1,
-              tweenLength: false,
-            },
-          });
-        };
-
-        /**
-         * A function to animate the paper plane
-         */
-        const animateDrawings = () => {
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: isMobilePortraitScreen ? ".hand-icon" : "",
-              start: "top center",
-            },
-          });
-          tl.to(".hand-icon", {
-            opacity: 1,
-          }).to(".hand-icon", {
-            transformOrigin: "bottom center",
-            keyframes: {
-              "5%": { rotate: 0 },
-              "25%": { rotate: -35 },
-              "50%": { rotate: 35 },
-              "75%": { rotate: -35 },
-              "100%": { rotate: 0 },
-            },
-            repeatDelay: 0.5,
-            repeat: -1,
-            yoyo: true,
-            ease: "none",
-          });
-          if (!isMobilePortraitScreen)
+          /**
+           * A function to animate the paper plane
+           */
+          const animateDrawings = () => {
             gsap.to("#paper-plane", {
               scrollTrigger: {
                 trigger: ".split-text-story",
                 start: "left 80%",
                 end: "right left",
-                toggleActions: "play none none none",
-                containerAnimation: scrollHorizontal || undefined,
+                containerAnimation: scrollHorizontal,
               },
               keyframes: {
-                "20%": { opacity: 1, scale: 1 },
+                "20%": { autoAlpha: 1, scale: 1 },
               },
               duration: 5,
               ease: "power1.inOut",
@@ -203,26 +103,55 @@ export default function About() {
                 autoRotate: 45,
               },
             });
-        };
-
-        const animateStory = () => {
-          gsap.from(".responsive", {
-            y: 100,
-            scrollTrigger: {
-              trigger: ".responsive",
-              start: "left 70%",
-              end: "right 40%",
-              containerAnimation: scrollHorizontal || undefined,
-            },
-          });
-
+          };
           const animateFrontendDeveloperBuilding = () => {
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".a",
-                containerAnimation: scrollHorizontal || undefined,
-                start: "right 80%",
+                containerAnimation: scrollHorizontal,
+                start: 0,
                 end: "right left",
+              },
+              onStart: () => {
+                gsap.to(".responsive", {
+                  y: 0,
+                  autoAlpha: 1,
+                  scrollTrigger: {
+                    trigger: ".responsive",
+                    start: "left 70%",
+                    end: "right 40%",
+                    containerAnimation: scrollHorizontal,
+                  },
+                  onStart: animateStateDriven,
+                });
+
+                document.fonts.ready.then(() => {
+                  const splitTextStory =
+                    document.querySelector(".split-text-story");
+                  splitTextStory?.setAttribute("style", "visibility: visible");
+                  SplitText.create(".split-text-story", {
+                    type: "words",
+                    wordsClass: "split-word",
+                    autoSplit: true,
+                    onSplit(self) {
+                      return gsap.to(self.words, {
+                        y: 0,
+                        autoAlpha: 1,
+                        stagger: {
+                          amount: 0.8,
+                          from: "start",
+                        },
+                        scrollTrigger: {
+                          trigger: ".split-text-story",
+                          containerAnimation: scrollHorizontal,
+                          start: "left 70%",
+                          end: "right center",
+                        },
+                        onComplete: animateReact,
+                      });
+                    },
+                  });
+                });
               },
             });
             timeline
@@ -233,7 +162,7 @@ export default function About() {
               .to(
                 ".frontend",
                 {
-                  xPercent: 0,
+                  x: 0,
                   ease: "power2.in",
                 },
                 "-=0.3",
@@ -265,25 +194,24 @@ export default function About() {
                 "-=0.5",
               );
           };
-
           const animateStateDriven = () => {
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".state",
-                containerAnimation: scrollHorizontal || undefined,
+                containerAnimation: scrollHorizontal,
                 start: "left 70%",
                 end: "right 40%",
               },
             });
 
             timeline
-              .from(".state", {
-                x: -100,
+              .to(".state", {
+                x: 0,
               })
-              .from(
+              .to(
                 ".driven",
                 {
-                  x: -230,
+                  x: 0,
                 },
                 "-=0.3",
               )
@@ -299,15 +227,15 @@ export default function About() {
                 "<",
               );
           };
-
           const animateReact = () => {
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".react-icon",
                 start: "left 80%",
                 end: "right 40%",
-                containerAnimation: scrollHorizontal || undefined,
+                containerAnimation: scrollHorizontal,
               },
+              onStart: animateJsTs,
             });
             timeline
               .to(".react-icon", {
@@ -324,26 +252,25 @@ export default function About() {
                 yPercent: 0,
               });
           };
-
           const animateJsTs = () => {
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".javaScript",
                 start: "left 70%",
                 end: "right 40%",
-                containerAnimation: scrollHorizontal || undefined,
+                containerAnimation: scrollHorizontal,
               },
             });
             timeline
               .to(".javaScript", {
-                opacity: 1,
-                yPercent: 0,
+                autoAlpha: 1,
+                y: 0,
               })
               .to(
                 ".typeScript",
                 {
-                  opacity: 1,
-                  yPercent: 0,
+                  autoAlpha: 1,
+                  y: 0,
                 },
                 "-=0.3",
               )
@@ -370,65 +297,87 @@ export default function About() {
               );
           };
 
-          document.fonts.ready.then(() => {
-            SplitText.create(".split-text-story", {
-              type: "words",
-              autoSplit: true,
-              onSplit(self) {
-                return gsap.from(self.words, {
-                  y: -100,
-                  stagger: {
-                    amount: 0.8,
-                    from: "start",
-                  },
+          const animateIntro = () => {
+            const timeline = isMobilePortraitScreen
+              ? gsap.timeline({
                   scrollTrigger: {
-                    trigger: ".split-text-story",
-                    containerAnimation: scrollHorizontal || undefined,
-                    start: "left 70%",
-                    end: "right center",
+                    trigger: ".word-hi",
+                    start: "top center",
+                    end: "bottom+=200 center",
+                    markers: true,
+                    id: "name",
                   },
-                  onComplete: animateReact,
-                });
+                })
+              : gsap.timeline({});
+
+            timeline.to(".name1", {
+              duration: 2,
+              scrambleText: {
+                text: "Joshua Glenn R. Gulbin",
+                chars: "01 ",
+                oldClass: "unicode",
+                newClass: "post-scramble",
+                speed: 0.5,
+                revealDelay: 1,
+                tweenLength: false,
               },
             });
-          });
+          };
+          const animateHandIcon = () => {
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: isMobilePortraitScreen ? ".hand-icon" : "",
+                start: "top center",
+              },
+            });
+            tl.to(".hand-icon", {
+              autoAlpha: 1,
+            }).to(".hand-icon", {
+              transformOrigin: "bottom center",
+              keyframes: {
+                "5%": { rotate: 0 },
+                "25%": { rotate: -35 },
+                "50%": { rotate: 35 },
+                "75%": { rotate: -35 },
+                "100%": { rotate: 0 },
+              },
+              repeatDelay: 0.5,
+              repeat: -1,
+              yoyo: true,
+              ease: "none",
+            });
+          };
+
+          animateIntro();
+          animateHandIcon();
           animateFrontendDeveloperBuilding();
-          animateStateDriven();
-          animateJsTs();
-        };
+          animateDrawings();
+        }
 
-        const animateTechStack = () => {
-          const techStacks = gsap.utils.toArray<HTMLElement[]>(".tech-stack");
-
-          gsap.from(techStacks, {
-            y: 100,
-            opacity: 0,
-            stagger: {
-              amount: 1,
-              from: "start",
-            },
-            scrollTrigger: {
-              trigger: ".container-tech-stack",
-              start: "top bottom",
-              end: "bottom 40%",
-            },
+        if (!isMobilePortraitScreen) {
+          ScrollTrigger.create({
+            trigger: ".canvas-container",
+            pin: true,
+            start: 0,
+            end: () =>
+              (document.querySelector(".tablet-pinned") as HTMLDivElement)
+                ?.offsetHeight +
+              "+=" +
+              (document.querySelector(".tablet-pinned") as HTMLDivElement)
+                ?.offsetWidth +
+              "top",
           });
-        };
-        gsapSetStyles();
-        animateIntro();
-        animateDrawings();
-        animateTechStack();
-        if (!isMobilePortraitScreen) animateStory();
+        }
       });
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [], revertOnUpdate: true },
   );
 
   return (
     <main className="bg-primary-color-darker mb-4">
       <section id="about-top" className="flex flex-col relative">
         <div className="canvas-container h-75 tablet-portrait:absolute w-full top-0 left-0  z-400 tablet-portrait:w-55 tablet-portrait:h-screen overflow-hidden">
-          <div className="hidden tablet-portrait:block absolute bg-primary-color-darker w-[18vw] h-full"></div>
+          <div className="hidden tablet-portrait:block absolute bg-primary-color-darker w-[15vw] h-80"></div>
           <AboutCanvas />
         </div>
         <div className="tablet-pinned max-w-225! relative">
@@ -449,7 +398,7 @@ export default function About() {
                   {" "}
                   <span className="word-hi self-end">Hi!</span>{" "}
                   <span className="min-w-3">
-                    <FaHandPaper className="hand-icon z-300" />
+                    <FaHandPaper className="hand-icon z-300 invisible tablet-portrait:visible" />
                   </span>{" "}
                 </span>{" "}
                 <span className="block tablet-portrait:hidden">
@@ -464,25 +413,19 @@ export default function About() {
                   <span className="name1 text-col-neutral-1 inline-block font-bold min-w-50 overflow-clip"></span>{" "}
                 </span>
               </p>
+              {/* mobile UI */}
               <p
                 className="inline-block text-center h-full tablet-portrait:hidden col-start-1"
                 aria-hidden="true"
               >
                 {" "}
-                a{" "}
-                <span className="relative pb-0.5 after-line frontend-after">
+                a <span className=" after-line frontend-after">
                   frontend
                 </span>{" "}
-                <span className="relative pb-0.5 after-line developer-after">
-                  developer
-                </span>{" "}
-                <span className="relative pb-0.5 after-line building-after">
-                  building{" "}
-                </span>{" "}
+                <span className=" after-line developer-after">developer</span>{" "}
+                <span className=" after-line building-after">building </span>{" "}
                 responsive, state-driven web applications using React and{" "}
-                <span className="relative pb-0.5 after-line javascript-after">
-                  JavaScript
-                </span>
+                <span className=" after-line javascript-after">JavaScript</span>{" "}
                 /{" "}
                 <span className="relative pb-0.5 after-line typescript-after">
                   TypeScript
@@ -490,38 +433,41 @@ export default function About() {
                 .
               </p>
             </div>
+            {/* bigger screen UI */}
             <div
               className="hidden text-center relative tablet-portrait:flex gap-2 text-3xl items-end min-h-30 h-full"
               aria-hidden="true"
             >
               {" "}
               <span className="clip ">
-                <span className="story-telling inline-block a lift-words">
+                <span className="story-telling inline-block a lift-words -translate-x-6.25">
                   a
                 </span>{" "}
               </span>
               <span className="grid grid-cols-[repeat(9,50px)] gap-0.5 relative clip">
-                <span className="story-telling frontend py-1.5 px-2.5 rounded-2xl frontend-bg-linear col-start-1 col-span-3 row-start-1">
+                <span className="story-telling frontend py-1.5 px-2.5 rounded-2xl frontend-bg-linear col-start-1 col-span-3 row-start-1 -translate-x-[101%]">
                   <span>frontend</span>
                 </span>
-                <span className="story-telling developer py-1.5 px-2.5 rounded-2xl developer-bg-linear col-start-3 col-span-5 row-start-1 -z-1">
+                <span className="story-telling developer py-1.5 px-2.5 rounded-2xl developer-bg-linear col-start-3 col-span-5 row-start-1 -z-1 invisible rotate-180 origin-top-left">
                   <span>developer</span>
                 </span>
-                <span className="story-telling building py-1.5 px-2.5 rounded-2xl building-bg-linear col-start-7 col-span-3 row-start-1">
+                <span className="story-telling building py-1.5 px-2.5 rounded-2xl building-bg-linear col-start-7 col-span-3 row-start-1 origin-bottom translate-y-3.75 scale-y-0">
                   <span>building</span>{" "}
                 </span>
               </span>
               <span className="story-telling lift-words clip">
                 {" "}
-                <span className="responsive block">responsive,</span>{" "}
+                <span className="responsive block invisible translate-y-12.5">
+                  responsive,
+                </span>{" "}
               </span>
               <span className="container-state-driven grid grid-cols-[repeat(4,50px)] clip content-start mb-0.75  rounded-lg">
-                <span className="story-telling state col-start-1 col-span-2 bg-action-color text-dark-foreground rounded-l-sm py-0.5 pl-1.5 flex gap-1.5 items-center z-2">
+                <span className="story-telling state col-start-1 col-span-2 bg-action-color text-dark-foreground rounded-l-sm py-0.5 pl-1.5 flex gap-1.5 items-center z-2 -translate-x-12.5">
                   state{" "}
-                  <span className="story-telling hyphen w-0.5 h-[3px] block bg-dark-foreground"></span>
+                  <span className="story-telling hyphen w-0.5 h-[3px] block bg-dark-foreground origin-center rotate-90 scale-x-[10]"></span>
                 </span>
 
-                <span className="story-telling driven col-start-3 col-span-2 bg-action-color text-dark-foreground py-0.5 pl-0.5 pr-1.5 rounded-r-sm block z-1">
+                <span className="story-telling driven col-start-3 col-span-2 bg-action-color text-dark-foreground py-0.5 pl-0.5 pr-1.5 rounded-r-sm block z-1 -translate-x-28.75">
                   driven
                 </span>
               </span>{" "}
@@ -534,30 +480,30 @@ export default function About() {
                     d="M-0.667,60.666C27.996,124.328,150.091,48.672,145.998,78.332,144.624,88.286,57.515,107.41,70.573,60.904,81.741,21.116,317.426,80.263,315.53,24.012,314.232,-14.453,266.274,-3.652,269.182,22.109,273.302,58.631,340.032,53.801,383.995,54.664"
                   ></path>
                 </svg>
-                <FaPaperPlane id="paper-plane" />
+                <FaPaperPlane id="paper-plane" className="invisible scale-50" />
               </div>
               <span className="story-telling split-text-story lift-words clip">
                 web applications using
               </span>{" "}
               <span className="grid grid-cols-[repeat(4,50px) items-center mb-0.75 gap-0.5 clip">
-                <span className="story-telling react col-start-1 col-span-2">
+                <span className="story-telling react col-start-1 col-span-2 -translate-x-12.5">
                   React
                 </span>{" "}
-                <FaReact className="col-start-3 react-icon text-[#61DBFB] bg-primary-color-darker text-5xl font-bold rounded-md z-1" />
-                <span className="story-telling and pl-1 mb-px col-start-4">
+                <FaReact className="col-start-3 react-icon text-[#61DBFB] bg-primary-color-darker text-5xl font-bold rounded-md z-1 -translate-x-18.75" />
+                <span className="story-telling and pl-1 mb-px col-start-4 -translate-y-[102%]">
                   and
                 </span>{" "}
               </span>
               <span className="mb-[11px] items-center grid grid-cols-[repeat(4,50px)] grid-rows-[repeat(2,20px)] gap-2.5 relative">
                 <span className="clip col-start-1 row-start-1 col-span-2 js-container">
-                  <span className="story-telling relative block pb-0.5 javascript-after javaScript  py-0.5 px-1.5 bg-action-color text-dark-foreground rounded-sm ">
+                  <span className="story-telling relative block pb-0.5 javascript-after javaScript  py-0.5 px-1.5 bg-action-color text-dark-foreground rounded-sm invisible translate-y-full">
                     JavaScript
                   </span>{" "}
                 </span>
 
                 <span className="text-8xl divider absolute left-1/2 -translate-x-1/2 z-1 w-48 h-1 bg-light-foreground"></span>
                 <span className="clip col-start-4 row-start-2 col-span-2 ts-container">
-                  <span className="story-telling relative block pb-0.5 typescript-after typeScript  py-0.5 px-1.5 bg-secondary-color rounded-sm ">
+                  <span className="story-telling relative block pb-0.5 typescript-after typeScript  py-0.5 px-1.5 bg-secondary-color rounded-sm  invisible -translate-y-full">
                     TypeScript.
                   </span>
                 </span>

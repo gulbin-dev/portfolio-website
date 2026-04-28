@@ -1,13 +1,8 @@
-import { useLoading } from "@utils/LoadingContext";
 import { frameImages } from "@utils/imageSequence";
 import { ImageSequenceConfig } from "@utils/types";
 import { gsap, mediaQueries, ScrollSmoother, useGSAP } from "@utils/gsap";
-import { useRef } from "react";
 
-export const Canvas = () => {
-  const { isRevealed } = useLoading();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
+export function Canvas() {
   // image sequence animation
   useGSAP(
     () => {
@@ -19,12 +14,7 @@ export const Canvas = () => {
         smoother?.effects("[data-speed], [data-lag]");
 
         // gsap.matchMedia contitions
-        const { isMobilePortraitScreen, isDesktopScreen } =
-          context.conditions ?? {};
-
-        const canvas = document.getElementById("hero-canvas");
-        canvas?.setAttribute("width", "420px");
-        canvas?.setAttribute("height", "720px");
+        const { isMobilePortraitScreen } = context.conditions ?? {};
 
         const { placeholderImage, playhead, images } = frameImages;
 
@@ -33,22 +23,25 @@ export const Canvas = () => {
             config.canvas,
           )[0] as HTMLCanvasElement;
           const ctx = canvasElement.getContext("2d");
-          if (!isMobilePortraitScreen) ctx!.scale(0.7, 0.7);
-          else ctx!.scale(1, 1);
+          if (!isMobilePortraitScreen) {
+            canvasElement.style.scale = "0.7";
+          } else {
+            canvasElement.style.scale = "1";
+          }
           const updateImage = () => {
             const currentImg = images[Math.round(playhead.frame)];
-
+            const x = (canvasElement.width - placeholderImage.width) / 2;
             // draw the placeholderImage with blur filter while the current frame still loads
             if (currentImg && !currentImg.complete) {
               ctx!.clearRect(0, 0, canvasElement.width, canvasElement.height);
               ctx!.filter = "blur(10px)";
-              const x = (canvasElement.width - currentImg.width) / 2;
-              ctx!.drawImage(placeholderImage, x, isDesktopScreen ? 80 : 0);
+
+              ctx!.drawImage(placeholderImage, x, 0);
 
               // add text on canvas
-              ctx!.filter = "blur(0px)"; // Reset filter so text isn't blurry
-              ctx!.fillStyle = "white"; // Change color to match your UI
-              ctx!.font = "20px Arial"; // Adjust size and font family
+              ctx!.filter = "blur(0px)";
+              ctx!.fillStyle = "white";
+              ctx!.font = "20px Arial";
               ctx!.textAlign = "center";
               ctx!.textBaseline = "middle";
               ctx!.fillText(
@@ -61,8 +54,7 @@ export const Canvas = () => {
             } else if (currentImg && currentImg.complete) {
               ctx!.clearRect(0, 0, canvasElement.width, canvasElement.height);
               ctx!.filter = "blur(0px)";
-              const x = (canvasElement.width - currentImg.width) / 2;
-              ctx!.drawImage(currentImg, x, isDesktopScreen ? 80 : 0);
+              ctx!.drawImage(currentImg, x, 0);
             }
           };
 
@@ -98,19 +90,20 @@ export const Canvas = () => {
             id: "hero-canvas-scroll",
             end: isMobilePortraitScreen ? "bottom 90%" : "20% top",
             scrub: true,
-            invalidateOnRefresh: true,
           },
         });
       });
     },
-    { dependencies: [isRevealed], revertOnUpdate: true },
+    { dependencies: [] },
   );
 
   return (
     <canvas
       id="hero-canvas"
-      className="absolute tablet-portrait:max-w-none top-25 mobile-landscape:left-1/2 mobile-landscape:-translate-x-1/2! tablet-portrait:left-0 tablet-portrait:top-15 tablet-portrait:translate-x-0! desktop:left-1/2"
+      className="absolute tablet-portrait:max-w-none top-25 mobile-landscape:left-1/2 mobile-landscape:-translate-x-1/2! tablet-portrait:left-0 tablet-portrait:top-15 tablet-portrait:translate-x-0! "
       data-speed="0.5"
+      width={420}
+      height={720}
     ></canvas>
   );
-};
+}

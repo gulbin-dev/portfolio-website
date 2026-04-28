@@ -1,14 +1,10 @@
-"use client";
 import VsCodeUI from "./_components/VsCodeUI";
 import CardSkill from "./_components/CardSkill";
 import HireMe from "./_components/HireMe";
 import HeroSection from "./_components/HeroSection";
-import ScrollReset from "@utils/ScrollReset";
 
 /** Home page content */
 export default function Home() {
-  ScrollReset();
-
   return (
     <main>
       {/* hero-section */}
