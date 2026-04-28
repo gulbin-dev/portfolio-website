@@ -18,9 +18,9 @@ export default async function Projects() {
       ),
     })),
   );
-  console.log(projectsWithPreview);
+
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 max-w-180 tablet-portrait:w-[90vw] justify-self-center py-5">
       {projectsWithPreview.map((project) => (
         <div key={project.id}>
           <PreviewVideo src={project.previewUrl} />
