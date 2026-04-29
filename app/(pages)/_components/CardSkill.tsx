@@ -97,11 +97,11 @@ export default function CardSkill() {
       className="section w-full! h-full relative mt-0! overflow-hidden linear-bg pb-8 text-light-foreground"
     >
       <div className="overflow-hidden">
-        <h2 className="card-skill-header opacity-100 text-heading-lg text-center text-pretty pt-5 tablet-portrait:pt-10 pb-1 px-2">
+        <h2 className="card-skill-header opacity-100 text-size-lg text-center text-pretty pt-5 tablet-portrait:pt-10 pb-1 px-2">
           Building Web Features that can stand out other brands
         </h2>
         <p
-          className="card-skill-p text-center text-pretty mt-1.5 px-3"
+          className="card-skill-p text-center text-pretty mt-1.5 px-3 desktop:text-size-xsm"
           aria-hidden="true"
         >
           A website rich in accessibility, performance, user-friendly, and clean

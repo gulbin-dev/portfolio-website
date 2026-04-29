@@ -382,7 +382,7 @@ export default function About() {
             <div className="hidden tablet-portrait:block min-w-60 min-h-15"></div>{" "}
             <div className="flex mt-15 flex-col tablet-portrait:grid tablet-portrait:auto-rows-auto items-center tablet-portrait:max-h-20 tablet-portrait:auto-cols-min tablet-portrait:mt-0 tablet-portrait:w-screen tablet-portrait:min-w-50 tablet-portrait:gap-y-5">
               {" "}
-              <h1 className="text-heading-lg mt-10 tablet-portrait:text-heading-xl col-start-1">
+              <h1 className="text-size-lg mt-10 tablet-portrait:text-size-xl col-start-1">
                 About Me
               </h1>
               <p
@@ -515,7 +515,7 @@ export default function About() {
 
         {/* Contact */}
         <div className="relative flex flex-col items-center gap-x-2 mt-6 tablet-portrait:mt-50">
-          <h2 className="text-heading-lg! tablet-portrait:text-heading-xl!">
+          <h2 className="text-size-lg! tablet-portrait:text-size-xl!">
             Reach out!
           </h2>
           <ul className="text-4xl flex gap-3 mt-2">
@@ -533,7 +533,7 @@ export default function About() {
         </div>
         {/*  Tech Stack */}
         <div className="mt-5">
-          <h2 className="text-heading-lg text-center">Tech Stack</h2>
+          <h2 className="text-size-lg text-center">Tech Stack</h2>
           <ul className="flex container-tech-stack flex-wrap gap-y-4 gap-x-2 mt-3 justify-center">
             <li>
               <span className="tech-stack">HTML</span>

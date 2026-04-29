@@ -17,12 +17,12 @@ export default function Footer() {
           />
         </Link>
 
-        <p className="mt-2">
+        <p className="mt-2 desktop:text-size-xsm">
           Frontend React Web developer focusing on building responsive,
           user-centered, seo friendly website and clean code space.
         </p>
-        <nav className="mt-3">
-          <ul className="flex gap-1 text-4xl">
+        <nav className="mt-3 footer-nav">
+          <ul className="flex gap-1">
             <li>
               <Link href="">
                 <FaGithubSquare />
@@ -40,7 +40,7 @@ export default function Footer() {
             </li>
           </ul>
         </nav>
-        <button className="bg-action-color text-dark-foreground rounded-2xl py-0.5 px-2 font-bold mt-3">
+        <button className="bg-action-color text-dark-foreground rounded-2xl py-0.5 px-2 font-bold mt-3 tablet-portrait:text-2xl desktop:text-size-sm">
           Download CV
         </button>
 

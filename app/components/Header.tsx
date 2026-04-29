@@ -79,7 +79,7 @@ export default function Header() {
         <div className="bg-primary-color-darker w-full h-screen sticky top-0 left-0 z-10 py-15">
           <NavLinks
             navStyle="flex flex-col gap-2 items-end pr-3"
-            anchorStyle="text-heading-lg"
+            anchorStyle="text-size-lg"
             updateState={setIsMobileNavOpen}
           />
         </div>

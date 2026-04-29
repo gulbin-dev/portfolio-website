@@ -25,7 +25,7 @@ export default async function Projects() {
         <div key={project.id}>
           <PreviewVideo src={project.previewUrl} />
           <article className="rounded-xl border p-4">
-            <h3 className="text-heading-md font-semibold">{project.name}</h3>
+            <h3 className="text-size-md font-semibold">{project.name}</h3>
             <p className="mt-2 text-sm text-pretty">
               {project.description ?? "No description available."}
             </p>

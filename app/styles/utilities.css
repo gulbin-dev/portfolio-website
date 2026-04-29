@@ -10,6 +10,10 @@
 
   .header-nav {
     li {
+      @variant desktop {
+        font-size: var(--text-size-sm);
+      }
+
       &::after {
         content: "";
         position: absolute;

@@ -74,14 +74,14 @@ export default function VSCodeUI() {
     >
       <h2
         id="vs-code-header"
-        className="vs-code-header pt-8 pb-3 text-heading-xl text-center"
+        className="vs-code-header pt-8 pb-3 text-size-xl text-center"
       >
         Solving Problem Into Smaller Tasks
       </h2>
 
       {/* dark background <div> simialr to vs code */}
       <div className=" bg-[#0F111A] w-full">
-        <div className="max-w-96 place-self-center px-3 flex flex-col py-4 text-heading-md tablet-portrait:text-2xl w-full ">
+        <div className="max-w-96 place-self-center px-3 flex flex-col py-4 text-size-md tablet-portrait:text-2xl w-full ">
           <p id="issue" className="text-issue-red flex flex-col gap-1">
             <span>
               <span id="issue-span" className="text-issue-red font-bold">

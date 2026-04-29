@@ -115,9 +115,9 @@ export default function HeroSection() {
       id="home-top"
       className="section w-full h-full overflow-hidden relative linear-bg z-0 tablet-portrait:h-90"
     >
-      <div className="flex flex-col place-self-center max-w-180 h-full tablet-portrait:flex-row tablet-landscape:h-fit! tablet-portrait:justify-center">
+      <div className="flex flex-col w-full place-self-center max-w-180 h-full tablet-portrait:flex-row tablet-landscape:h-fit! tablet-portrait:justify-center">
         <div className="z-1 px-3 pt-10 h-full tablet-portrait:pt-15 tablet-portrait:max-w-1/2">
-          <h1 aria-hidden className="hero-header hero-header">
+          <h1 aria-hidden className="hero-header">
             Frontend Developer{" "}
             <span className="relative">
               Building
@@ -145,7 +145,7 @@ export default function HeroSection() {
           <h1 className="sr-only">
             Frontend Developer Building Predictable React Interfaces
           </h1>
-          <p className="hero-p mt-4 tablet-portrait:mt-3 translate-y-12.5 invisible">
+          <p className="hero-p mt-4 tablet-portrait:mt-3 tablet-portrait:text-size-xsm translate-y-12.5 invisible">
             Helping teams deliver high-performance React applications with a
             focus on accessibility and SEO.
           </p>
@@ -153,7 +153,7 @@ export default function HeroSection() {
             <li className="list-discover-button invisible group">
               <Link
                 href="/discover"
-                className="relative block w-30 h-5 rounded-lg bg-action-color text-dark-foreground overflow-hidden font-bold"
+                className="relative block w-30 h-5 rounded-lg bg-action-color text-dark-foreground overflow-hidden font-bold desktop:text-size-sm desktop:w-45 desktop:h-7"
               >
                 <div className="absolute inset-0 flex items-center justify-center transition-colors duration-500">
                   CHECK MY WORKS
@@ -164,10 +164,10 @@ export default function HeroSection() {
               </Link>
             </li>
 
-            <li className="list-about-me-button autoAlpha group">
+            <li className="list-about-me-button group">
               <Link
                 href="/about"
-                className="relative inline-block w-30 h-5 rounded-lg bg-action-color text-dark-foreground overflow-hidden font-bold"
+                className="relative inline-block w-30 h-5 rounded-lg bg-action-color text-dark-foreground overflow-hidden font-bold desktop:text-size-sm desktop:w-45 desktop:h-7"
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   KNOW MORE ABOUT ME
