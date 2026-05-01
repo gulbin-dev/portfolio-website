@@ -60,13 +60,13 @@ export default function About() {
             ".tablet-pinned",
           ) as HTMLDivElement;
           const scrollHorizontal = gsap.to(".tablet-pinned", {
-            x: -150 * storyTellingElements.length,
+            x: -180 * storyTellingElements.length,
             ease: "none",
             scrollTrigger: {
               trigger: ".tablet-pinned",
               pin: true,
               start: 0,
-              end: () => "bottom+=" + (pinned?.offsetWidth + 250) + " top",
+              end: () => "bottom+=" + pinned?.offsetWidth + " top",
               pinSpacing: true,
               scrub: 1,
               invalidateOnRefresh: true,
@@ -109,9 +109,8 @@ export default function About() {
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: ".a",
+                immediateRender: true,
                 containerAnimation: scrollHorizontal,
-                start: 0,
-                end: "right left",
               },
               onStart: () => {
                 gsap.to(".responsive", {
@@ -119,7 +118,7 @@ export default function About() {
                   autoAlpha: 1,
                   scrollTrigger: {
                     trigger: ".responsive",
-                    start: "left 70%",
+                    start: "left 60%",
                     end: "right 40%",
                     containerAnimation: scrollHorizontal,
                   },
@@ -360,10 +359,13 @@ export default function About() {
   );
 
   return (
-    <main className="bg-primary-color-darker mb-4">
-      <section id="about-top" className="flex flex-col relative">
-        <div className="canvas-container h-90 w-full top-0 left-0  z-20  desktop:absolute desktop:mt-30 desktop:w-55 desktop:h-90 ">
-          <div className="hidden desktop:block absolute bg-primary-color-darker w-[15vw] h-80"></div>
+    <main className="bg-primary-color-darker">
+      <section
+        id="about-top"
+        className="flex flex-col relative max-w-180 place-self-center overflow-hidden"
+      >
+        <div className="canvas-container h-110 w-full relative top-0 left-0  z-20  desktop:absolute desktop:top-0 desktop:w-55 desktop:h-screen">
+          <div className="hidden absolute bg-primary-color-darker w-[15vw] h-screen desktop:block"></div>
           <AboutCanvas />
         </div>
         <div className="tablet-pinned max-w-225! relative">
@@ -371,13 +373,13 @@ export default function About() {
           <div className="relative desktop:top-45 desktop:flex">
             {" "}
             <div className="hidden desktop:block min-w-60 min-h-15"></div>{" "}
-            <div className="flex mt-5 flex-col items-center  tablet-portrait:mt-25 desktop:mt-8 desktop:grid desktop:auto-rows-auto desktop:max-h-20 desktop:auto-cols-min  desktop:w-screen desktop:min-w-80 desktop:gap-y-5">
+            <div className="flex mt-5 flex-col items-center  tablet-portrait:mt-5 desktop:mt-8 desktop:grid desktop:auto-rows-auto desktop:max-h-20 desktop:auto-cols-min  desktop:w-screen desktop:min-w-80 desktop:gap-y-5 desktop:items-center">
               {" "}
               <h1 className="text-size-lg  tablet-portrait:text-size-xl  col-start-1">
                 About Me
               </h1>
               <p
-                className="inline-block place-self-center col-start-1 mt-3 tablet-portrait:text-size-md  desktop:truncate desktop:mt-10"
+                className="inline-block place-self-center col-start-1 mt-3 tablet-portrait:text-size-xl desktop:truncate desktop:mt-10"
                 aria-hidden="true"
               >
                 <span className="flex gap-1 justify-center">
@@ -401,7 +403,7 @@ export default function About() {
               </p>
               {/* mobile UI */}
               <p
-                className="inline-block text-center h-full px-5 text-pretty tablet-portrait:text-size-xsm desktop:hidden col-start-1"
+                className="inline-block text-center h-full px-5 text-pretty tablet-portrait:text-size-md desktop:hidden col-start-1"
                 aria-hidden="true"
               >
                 {" "}
@@ -421,7 +423,7 @@ export default function About() {
             </div>
             {/* bigger screen UI */}
             <div
-              className="hidden text-center relative gap-2 text-3xl items-end min-h-30 h-full desktop:flex desktop:top-8 desktop:text-size-md"
+              className="hidden text-center relative gap-2 text-3xl items-end min-h-30 h-full desktop:flex desktop:top-8 desktop:text-size-xl"
               aria-hidden="true"
             >
               {" "}
