@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/gulbin-dev/gulbindev-portfolio/compare/v1.13.0...v1.14.0) (2026-05-01)
+
+
+### Features
+
+* added side nav bar animation ([53ff0ff](https://github.com/gulbin-dev/gulbindev-portfolio/commit/53ff0ffbaaeed61efbad8980c02eb7f1aa0e509f))
+
 ## [1.13.0](https://github.com/gulbin-dev/gulbindev-portfolio/compare/v1.12.2...v1.13.0) (2026-04-28)
 
 
