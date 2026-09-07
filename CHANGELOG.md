@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.5](https://github.com/gulbin-dev/gulbindev-portfolio/compare/v2.2.4...v2.2.5) (2026-09-07)
+
+
+### Bug Fixes
+
+* fix scroll progress trigger to only fire once ([#126](https://github.com/gulbin-dev/gulbindev-portfolio/issues/126)) ([9d2556f](https://github.com/gulbin-dev/gulbindev-portfolio/commit/9d2556fe6796460ccdba160b86caa64d4ff12d79))
+
 ## [2.2.4](https://github.com/gulbin-dev/gulbindev-portfolio/compare/v2.2.3...v2.2.4) (2026-09-07)
 
 
