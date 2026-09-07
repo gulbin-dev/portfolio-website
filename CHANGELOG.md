@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.4](https://github.com/gulbin-dev/gulbindev-portfolio/compare/v2.2.3...v2.2.4) (2026-09-07)
+
+
+### Bug Fixes
+
+* improve known speed issues ([#123](https://github.com/gulbin-dev/gulbindev-portfolio/issues/123)) ([db48a55](https://github.com/gulbin-dev/gulbindev-portfolio/commit/db48a55b962065fb46529ca040bfe45e9b2de88c))
+
 ## [2.2.3](https://github.com/gulbin-dev/gulbindev-portfolio/compare/v2.2.2...v2.2.3) (2026-09-06)
 
 
