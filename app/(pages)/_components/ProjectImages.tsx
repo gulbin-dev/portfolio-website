@@ -235,7 +235,7 @@ export default function ProjectImages({
             <Image
               src={`${url}/poster.png`}
               alt={`${item.name}-poster`}
-              loading="lazy"
+              loading="eager"
               fill
               sizes="(max-width: 768px) 100vw, 20vw"
               className="relative rounded-xl object-contain"

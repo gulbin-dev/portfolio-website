@@ -18,6 +18,7 @@ export default function Canvas({ className }: { className: string }) {
 
   // Track the actual number of individual images successfully loaded across the wire
   const [loadedCount, setLoadedCount] = useState(0);
+  const loadedCountRef = useRef(0);
 
   // A mutable pointer to manually execute repaints outside of GSAP execution blocks
   const triggerRepaintRef = useRef<() => void>(() => {});
@@ -36,6 +37,7 @@ export default function Canvas({ className }: { className: string }) {
     startPreloading();
 
     const unsubscribe = subscribeToFrameLoads((count) => {
+      loadedCountRef.current = count;
       setLoadedCount(count);
       // If an asset arrives while a user is idling or stalling on Slow 4G, paint it immediately
       if (triggerRepaintRef.current) {
@@ -52,7 +54,7 @@ export default function Canvas({ className }: { className: string }) {
 
   useGSAP(
     () => {
-      // We check loadedCount > 0 instead of length to confirm bitmaps are ready to draw
+      // Wait for the first decoded frame before creating the scroll animation.
       if (!inView || isCancelled || loadedCount === 0) return;
 
       const mm = gsap.matchMedia();
@@ -120,18 +122,10 @@ export default function Canvas({ className }: { className: string }) {
             if (displayImg) {
               // ImageBitmaps clear and draw natively faster than DOM images
               ctx.drawImage(displayImg, placeholderX, 0, 625, 720);
-
-              if (loadedCount < 47) {
-                ctx.fillText(
-                  `Loading Images [${loadedCount}/47]`,
-                  centerX,
-                  centerY,
-                );
-              }
             } else {
               // absolute fallback: show placeholder info while loading frame 0 over the wire
               ctx.fillText(
-                `Initializing Sequence (${loadedCount}/47)...`,
+                `Initializing Sequence (${loadedCountRef.current}/47)...`,
                 centerX,
                 centerY,
               );
@@ -169,9 +163,9 @@ export default function Canvas({ className }: { className: string }) {
             id: "canvas",
             trigger: "#canvas",
             start: isDesktopScreen
-              ? "top-=150 top"
+              ? "top=50 top"
               : isTabletScreen
-                ? "top-=100 top"
+                ? "top=100 top"
                 : "top 60%",
             end: isTabletScreen ? "bottom 90%" : "20% top",
             scrub: true,
@@ -179,7 +173,7 @@ export default function Canvas({ className }: { className: string }) {
         });
       });
     },
-    { dependencies: [inView, signal, loadedCount] },
+    { dependencies: [inView, signal, loadedCount > 0] },
   );
 
   return (
