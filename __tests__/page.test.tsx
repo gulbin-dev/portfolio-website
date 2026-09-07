@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 
@@ -25,8 +25,7 @@ vi.mock("next/link", () => ({
       <a
         href={href}
         {...props}
-        onClick={(e) => {
-          e.preventDefault(); // Prevents "Not implemented: navigation" error
+        onClick={() => {
           mockPush(href); // Tracks the path requested by the link component
         }}
       >
@@ -52,6 +51,25 @@ vi.mock("next/navigation", () => ({
   },
 }));
 
+// Mock async components that use Suspense
+vi.mock("@/app/(pages)/_components/WorkflowCards", () => ({
+  default: function MockWorkflowCards() {
+    return <div>Workflow Cards</div>;
+  },
+}));
+
+vi.mock("@/app/components/Contact", () => ({
+  default: function MockContact() {
+    return <div>Contact Form</div>;
+  },
+}));
+
+vi.mock("@/app/(pages)/_components/ProjectImages", () => ({
+  default: function MockProjectImages() {
+    return <div>Project Images</div>;
+  },
+}));
+
 describe("Multi-Page Navigation Test", () => {
   beforeEach(() => {
     // Clear tracking data between independent tests
@@ -67,10 +85,11 @@ describe("Multi-Page Navigation Test", () => {
   describe("Home Page Links", () => {
     test("navigates to projects from the home page link", async () => {
       const ResolvedPage = await HomePage();
-      render(ResolvedPage);
+      const home = await act(async () => render(ResolvedPage));
 
-      const projectsLink = screen.getByRole("link", {
+      const projectsLink = home.getByRole("link", {
         name: /check my work/i,
+        hidden: true,
       });
       await userEvent.click(projectsLink);
 
@@ -92,7 +111,7 @@ describe("Multi-Page Navigation Test", () => {
 
     test("renders the Projects Page layout elements", async () => {
       const ResolvedPage = await ProjectsPage();
-      render(ResolvedPage);
+      await act(async () => render(ResolvedPage));
 
       const heading = screen.getByRole("heading", { name: /projects/i });
 

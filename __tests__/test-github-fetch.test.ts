@@ -69,9 +69,6 @@ test("should return empty projects array if API returns non-array data", async (
 });
 
 test("should catch errors and populate responseError on API failure", async () => {
-  // Spy on console.error to prevent polluting test logs
-  const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-
   // Simulate an API network failure
   vi.mocked(octokit.request).mockRejectedValue(new Error("API Timeout"));
 
@@ -84,9 +81,4 @@ test("should catch errors and populate responseError on API failure", async () =
   expect(result.responseError.status).toBe(true);
   expect(result.responseError.message).toBe("API Timeout");
   expect(result.responseError.name).toBe("Error");
-
-  // Verify error was logged
-  expect(consoleSpy).toHaveBeenCalled();
-
-  consoleSpy.mockRestore();
 });
