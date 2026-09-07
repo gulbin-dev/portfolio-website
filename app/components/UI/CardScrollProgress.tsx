@@ -27,7 +27,7 @@ export default function CardScrollProgress({
   const { ref, inView } = useInView({
     threshold: 0,
     rootMargin: "0px 0px 500px 0px",
-    triggerOnce: false, // Changed to false so we can detect when it leaves view
+    triggerOnce: true,
   });
 
   useGSAP(
