@@ -21,13 +21,10 @@ export default function WorkflowCards() {
   useGSAP(
     () => {
       if (!inView) return;
-
       const cardList = gsap.utils.toArray<HTMLDivElement>(
         ".card",
         containerRef.current,
       );
-
-      gsap.set(cardList, { clearProps: "boxShadow" });
 
       ScrollTrigger.batch(cardList, {
         start: "10% center",
@@ -35,9 +32,8 @@ export default function WorkflowCards() {
         onToggle: (batch, triggers) => {
           batch.forEach((card, index) => {
             const trigger = triggers[index];
-
-            // GSAP handles the underlying style checks safely behind the scenes
-            gsap.set(card, {
+            gsap.to(card, {
+              duration: 0.3,
               boxShadow: trigger.isActive
                 ? "0px 0px 12px 4px var(--color-secondary-orange)"
                 : "none",
@@ -58,7 +54,7 @@ export default function WorkflowCards() {
       className="grid grid-flow-row auto-rows-[60px] grid-cols-[1fr_1fr_1fr_min] pb-10 tablet:pb-0"
     >
       <ul
-        aria-label="Workflow"
+        aria-label="WorkflowCards"
         className="relative z-2 col-span-3 col-start-1 row-span-20 row-start-1 flex flex-col gap-6 py-6 tablet:grid tablet:grid-flow-row tablet:auto-rows-[60px] tablet:grid-cols-8 tablet:gap-x-0 tablet:gap-y-3 desktop:grid-cols-12"
       >
         <li className="col-span-4 col-start-1 row-span-2 row-start-1 desktop:col-start-2">

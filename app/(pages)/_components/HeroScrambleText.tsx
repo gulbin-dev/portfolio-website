@@ -33,7 +33,6 @@ export default function HeroSplitScramblerText({
           const container = containerRef.current;
           if (!container) return;
 
-          // 1. Single DOM mutation setup pass
           container.innerText = revealText;
           const split = new SplitText(container, {
             type: "chars,words,lines",

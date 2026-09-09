@@ -12,34 +12,35 @@ interface HeadingProps {
 
 export default function HeaderLandmark({ children, level, id }: HeadingProps) {
   const HeaderLevel = `h${level}` as ElementType;
-
   const headerRef = useRef<HTMLHeadingElement | null>(null);
-
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const { ref, inView } = useInView({
     threshold: 0,
     rootMargin: "0px 0px 400px 0px",
     triggerOnce: true,
   });
-
+  useGSAP(() => {
+    timelineRef.current = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".mark-icon",
+        start: "top center",
+        end: "bottom+=100 center",
+      },
+      defaults: { ease: "power2.out", duration: 0.3 },
+    });
+  }, []);
   useGSAP(
     () => {
-      if (!inView) return;
+      if (!inView || !timelineRef.current) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".mark-icon",
-          start: "top center",
-          end: "bottom+=100 center",
-        },
-        defaults: { ease: "power2.out", duration: 0.3 },
-      });
-
-      tl.to(".header-text, .mark-icon", {
-        x: 0,
-      }).to(".mark-icon", {
-        rotate: 0,
-        ease: "expo.in",
-      });
+      timelineRef.current
+        .to(".header-text, .mark-icon", {
+          x: 0,
+        })
+        .to(".mark-icon", {
+          rotate: 0,
+          ease: "expo.in",
+        });
     },
     { dependencies: [inView], scope: headerRef },
   );

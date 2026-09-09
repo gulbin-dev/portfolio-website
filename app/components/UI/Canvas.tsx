@@ -54,7 +54,7 @@ export default function Canvas({ className }: { className: string }) {
 
   useGSAP(
     () => {
-      // Wait for the first decoded frame before creating the scroll animation.
+      // Wait for the first decoded frame or in viewport before creating the scroll animation.
       if (!inView || isCancelled || loadedCount === 0) return;
 
       const mm = gsap.matchMedia();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { gsap, useGSAP, ScrollTrigger } from "@utils/gsap";
+import { gsap, useGSAP, ScrollTrigger, mediaQueries } from "@utils/gsap";
 import { useInView } from "react-intersection-observer";
 
 // Centralized state registry to manage active instances smoothly
@@ -33,60 +33,66 @@ export default function CardScrollProgress({
   useGSAP(
     () => {
       if (!inView || isInitializedRef.current) return;
+      const mm = gsap.matchMedia();
 
-      const path = pathRef.current;
-      const target = circleRef.current;
-      if (!path || !target) return;
+      mm.add(mediaQueries, (context) => {
+        const { isDesktopScreen } = context.conditions ?? {};
+        if (isDesktopScreen) {
+          const path = pathRef.current;
+          const target = circleRef.current;
+          if (!path || !target) return;
 
-      // 1. Initialize hidden target in a single render batch
-      gsap.set(target, { autoAlpha: 0 });
+          // 1. Initialize hidden target in a single render batch
+          gsap.set(target, { autoAlpha: 0 });
 
-      // 2. Create the timeline animation ONCE and store it
-      animationRef.current = gsap.to(target, {
-        motionPath: {
-          path,
-          align: path,
-          alignOrigin: [0.5, 0.5],
-          autoRotate: false,
-        },
-        transformOrigin: "50% 50%",
-        ease: "none",
-        paused: true,
+          // 2. Create the timeline animation ONCE and store it
+          animationRef.current = gsap.to(target, {
+            motionPath: {
+              path,
+              align: path,
+              alignOrigin: [0.5, 0.5],
+              autoRotate: false,
+            },
+            transformOrigin: "50% 50%",
+            ease: "none",
+            paused: true,
+          });
+
+          // 3. Setup ScrollTrigger ONCE and store it
+          scrollTriggerRef.current = ScrollTrigger.create({
+            animation: animationRef.current,
+            trigger: svgRef.current,
+            start: "top center",
+            end: "bottom center",
+            scrub: 1,
+            anticipatePin: 1,
+            onToggle: (self) => {
+              // Use ScrollTrigger.generateStyles or core animations inside context to batch reads/writes
+              if (self.isActive) {
+                // If another instance is active, hide it instantly before showing this one
+                if (activeRegistry.circle && activeRegistry.circle !== target) {
+                  gsap.set(activeRegistry.circle, { autoAlpha: 0 });
+                }
+                if (activeRegistry.trigger && activeRegistry.trigger !== self) {
+                  activeRegistry.trigger.animation?.pause();
+                }
+
+                // Set new active instance
+                activeRegistry.circle = target;
+                activeRegistry.trigger = self;
+                gsap.set(target, { autoAlpha: 1 });
+              } else if (activeRegistry.trigger === self) {
+                // Clean up registry if leaving active state
+                gsap.set(target, { autoAlpha: 0 });
+                activeRegistry.circle = null;
+                activeRegistry.trigger = null;
+              }
+            },
+          });
+
+          isInitializedRef.current = true;
+        }
       });
-
-      // 3. Setup ScrollTrigger ONCE and store it
-      scrollTriggerRef.current = ScrollTrigger.create({
-        animation: animationRef.current,
-        trigger: svgRef.current,
-        start: "top center",
-        end: "bottom center",
-        scrub: 1,
-        anticipatePin: 1,
-        onToggle: (self) => {
-          // Use ScrollTrigger.generateStyles or core animations inside context to batch reads/writes
-          if (self.isActive) {
-            // If another instance is active, hide it instantly before showing this one
-            if (activeRegistry.circle && activeRegistry.circle !== target) {
-              gsap.set(activeRegistry.circle, { autoAlpha: 0 });
-            }
-            if (activeRegistry.trigger && activeRegistry.trigger !== self) {
-              activeRegistry.trigger.animation?.pause();
-            }
-
-            // Set new active instance
-            activeRegistry.circle = target;
-            activeRegistry.trigger = self;
-            gsap.set(target, { autoAlpha: 1 });
-          } else if (activeRegistry.trigger === self) {
-            // Clean up registry if leaving active state
-            gsap.set(target, { autoAlpha: 0 });
-            activeRegistry.circle = null;
-            activeRegistry.trigger = null;
-          }
-        },
-      });
-
-      isInitializedRef.current = true;
     },
     { dependencies: [inView], scope: svgRef, revertOnUpdate: true },
   );
